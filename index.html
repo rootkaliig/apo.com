@@ -526,14 +526,14 @@
                                             <i class="fas fa-globe text-cyber-blue mr-3 text-xl"></i>
                                             الدولة
                                         </label>
-                                        <select name="country" id="country" required="" class="w-full px-6 py-4 quantum-input rounded-xl text-sm relative z-10">
-                                            <option value="">اختر الدولة</option>
-                                            <option value="السعودية">السعودية 🇸🇦</option>
-                                            <option value="الكويت">الكويت 🇰🇼</option>
-                                            <option value="البحرين">البحرين 🇧🇭</option>
-                                            <option value="قطر">قطر 🇶🇦</option>
-                                            <option value="الإمارات">الإمارات العربية المتحدة 🇦🇪</option>
-                                            <option value="عُمان">عُمان 🇴🇲</option>
+                                        <select name="country" id="country" required="" class="w-full px-6 py-4 quantum-input rounded-xl text-lg font-bold relative z-10" style="font-weight: 900; color: #00FFFF;">
+                                            <option value="" style="font-weight: 900; color: #666;">اختر الدولة</option>
+                                            <option value="السعودية" style="font-weight: 900; color: #00FFFF;">السعودية 🇸🇦</option>
+                                            <option value="الكويت" style="font-weight: 900; color: #00FFFF;">الكويت 🇰🇼</option>
+                                            <option value="البحرين" style="font-weight: 900; color: #00FFFF;">البحرين 🇧🇭</option>
+                                            <option value="قطر" style="font-weight: 900; color: #00FFFF;">قطر 🇶🇦</option>
+                                            <option value="الإمارات" style="font-weight: 900; color: #00FFFF;">الإمارات العربية المتحدة 🇦🇪</option>
+                                            <option value="عُمان" style="font-weight: 900; color: #00FFFF;">عُمان 🇴🇲</option>
                                         </select>
                                     </div>
                                     <div>
@@ -1085,7 +1085,12 @@
             const selectedCountry = this.value;
             const citySelect = document.getElementById('city');
             
-            citySelect.innerHTML = '<option value="">اختر محافظة</option>';
+            // تحسين تصميم قائمة المحافظات
+            citySelect.className = 'w-full px-6 py-4 quantum-input rounded-xl text-lg font-bold relative z-10';
+            citySelect.style.fontWeight = '900';
+            citySelect.style.color = '#00FFFF';
+            
+            citySelect.innerHTML = '<option value="" style="font-weight: 900; color: #666;">اختر محافظة</option>';
             
             if (selectedCountry && citiesData[selectedCountry]) {
                 citySelect.disabled = false;
@@ -1094,6 +1099,8 @@
                     const option = document.createElement('option');
                     option.value = city;
                     option.textContent = city;
+                    option.style.fontWeight = '900';
+                    option.style.color = '#00FFFF';
                     citySelect.appendChild(option);
                 });
             } else {
